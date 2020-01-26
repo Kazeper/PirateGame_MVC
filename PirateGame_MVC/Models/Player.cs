@@ -7,6 +7,8 @@ namespace PirateBayMVC.Models
 {
 	public class Player
 	{
+		public string Nickname { get; set; }
+
 		public bool gameFieldIsSet;
 		//private long[] _GameField = new long[7];
 
@@ -36,10 +38,10 @@ namespace PirateBayMVC.Models
 		 * 09 - Bomb - your wallet go to 0
 		 * 10 - double your wallet
 		 * 11 - deposit your cash at wallet to the bank
-		 * 12 - add 5000$
-		 * 13 - add 3000$
-		 * 14 - add 1000$
-		 * 15 - add 200$
+		 * 12 - add 5000$ x1
+		 * 13 - add 3000$ x2
+		 * 14 - add 1000$ x10
+		 * 15 - add 200$  x25
 		 *
 		 */
 
@@ -47,10 +49,41 @@ namespace PirateBayMVC.Models
 
 		public Player()
 		{
-			gameFieldIsSet = false;
 		}
 
-		private void SetGameField()
+		public void SetGameField(long[] gameField)
+		{
+			this.GameField = gameField;
+		}
+
+		public void SetGameFieldRandomly()
+		{
+			List<int[]> availableFields = new List<int[]>
+			{
+				//		{amount, type of field }
+				new int[] { 1,1},
+				new int[] { 1,2},
+				new int[] { 1,3},
+				new int[] { 1,4},
+				new int[] { 1,5},
+				new int[] { 1,6},
+				new int[] { 1,7},
+				new int[] { 1,8},
+				new int[] { 1,9},
+				new int[] { 1,10},
+				new int[] { 1,11},
+				new int[] { 1,12},
+				new int[] { 2,13},
+				new int[] { 10,14},
+				new int[] { 25,15}
+			};
+		}
+
+		public void UseMirror()
+		{
+		}
+
+		public void UseShield()
 		{
 		}
 	}
