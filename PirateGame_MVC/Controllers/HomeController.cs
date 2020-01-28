@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using PirateBayMVC.Models;
 using PirateGame_MVC.Models;
 
 namespace PirateGame_MVC.Controllers
@@ -12,6 +13,9 @@ namespace PirateGame_MVC.Controllers
 	{
 		public IActionResult Index()
 		{
+			Player player = new Player();
+			player.SetGameFieldRandomly(null);
+
 			return View();
 		}
 

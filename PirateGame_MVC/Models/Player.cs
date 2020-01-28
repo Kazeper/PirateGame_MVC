@@ -7,24 +7,25 @@ namespace PirateBayMVC.Models
 {
 	public class Player
 	{
+		private readonly int rows;
+		private readonly int columns;
 		public string Nickname { get; set; }
 
 		public bool gameFieldIsSet;
-		//private long[] _GameField = new long[7];
 
-		public bool hasMirror { get; private set; }
-		public bool hasShield { get; private set; }
+		public bool HasMirror { get; private set; }
+		public bool HasShield { get; private set; }
 
 		public int Bank { get; set; }
 
 		public int Wallet { get; set; }
 
-		public long[] GameField { get; set; }
+		public int[] GameField { get; set; }
 
 		#region GameField Description
 
 		/*
-		 * one number at GameField Array contains 14 digits and represents whole row. 2 digits represent single field.
+		 * one number at GameField Array represents single field.
 		 * Field types:
 		 * 00 - empty field
 		 * 01 - Rob someone's points [action field]
@@ -49,16 +50,32 @@ namespace PirateBayMVC.Models
 
 		public Player()
 		{
+			rows = 7;
+			columns = 7;
+
+			GameField = new int[rows * columns];
 		}
 
-		public void SetGameField(long[] gameField)
+		public void SetGameField(int[] gameField)
 		{
 			this.GameField = gameField;
 		}
 
-		public void SetGameFieldRandomly()
+		public void SetGameFieldRandomly(int? seed)
 		{
-			List<int[]> availableFields = new List<int[]>
+			Random random;
+
+			if (seed is null)
+			{
+				random = new Random();
+			}
+			else
+			{
+				random = new Random((int)seed);
+			}
+
+			List<int> availableFields = CreateAvailableFieldsList();
+			List<int[]> availableFieldTypes = new List<int[]>
 			{
 				//		{amount, type of field }
 				new int[] { 1,1},
@@ -77,6 +94,29 @@ namespace PirateBayMVC.Models
 				new int[] { 10,14},
 				new int[] { 25,15}
 			};
+
+			foreach (int[] field in availableFieldTypes)
+			{
+				for (int i = field[0]; i > 0; i--)
+				{
+					int randomPosition = random.Next(0, availableFields.Count);
+					this.GameField[availableFields[randomPosition]] = field[1];
+
+					availableFields.Remove(availableFields[randomPosition]);
+					//field[0]--;
+				}
+			}
+		}
+
+		private List<int> CreateAvailableFieldsList()
+		{
+			List<int> availableFields = new List<int>();
+			for (int i = 0; i < this.rows * this.columns; i++)
+			{
+				availableFields.Add(i);
+			}
+
+			return availableFields;
 		}
 
 		public void UseMirror()
