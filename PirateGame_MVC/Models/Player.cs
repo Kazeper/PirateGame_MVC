@@ -121,10 +121,18 @@ namespace PirateBayMVC.Models
 
 		public void UseMirror()
 		{
+			if (HasMirror)
+			{
+				HasMirror = false;
+			}
 		}
 
 		public void UseShield()
 		{
+			if (HasShield)
+			{
+				HasShield = false;
+			}
 		}
 	}
 }
