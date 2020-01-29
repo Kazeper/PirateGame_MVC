@@ -7,8 +7,8 @@ namespace PirateBayMVC.Models
 {
 	public class Player
 	{
-		private readonly int rows;
-		private readonly int columns;
+		private readonly int _rows;
+		private readonly int _columns;
 		public string Nickname { get; set; }
 
 		public bool gameFieldIsSet;
@@ -50,10 +50,10 @@ namespace PirateBayMVC.Models
 
 		public Player()
 		{
-			rows = 7;
-			columns = 7;
+			_rows = 7;
+			_columns = 7;
 
-			GameField = new int[rows * columns];
+			GameField = new int[_rows * _columns];
 		}
 
 		public void SetGameField(int[] gameField)
@@ -111,7 +111,7 @@ namespace PirateBayMVC.Models
 		private List<int> CreateAvailableFieldsList()
 		{
 			List<int> availableFields = new List<int>();
-			for (int i = 0; i < this.rows * this.columns; i++)
+			for (int i = 0; i < this._rows * this._columns; i++)
 			{
 				availableFields.Add(i);
 			}
