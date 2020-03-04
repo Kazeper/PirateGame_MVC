@@ -8,6 +8,8 @@ namespace PirateGame.tests
 	{
 		public static readonly int SEED = 666;
 
+		#region Verify number of specific fields
+
 		[Theory]
 		[InlineData(1, 1)]
 		[InlineData(1, 2)]
@@ -41,5 +43,7 @@ namespace PirateGame.tests
 			Console.WriteLine(countedQuantity);
 			Assert.Equal(quantity, countedQuantity);
 		}
+
+		#endregion Verify number of specific fields
 	}
 }

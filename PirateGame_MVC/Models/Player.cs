@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PirateGame_MVC.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,8 +8,6 @@ namespace PirateBayMVC.Models
 {
 	public class Player
 	{
-		private readonly int _rows;
-		private readonly int _columns;
 		public string Nickname { get; set; }
 
 		public bool gameFieldIsSet;
@@ -50,10 +49,7 @@ namespace PirateBayMVC.Models
 
 		public Player()
 		{
-			_rows = 7;
-			_columns = 7;
-
-			GameField = new int[_rows * _columns];
+			GameField = new int[GameSettings.Rows * GameSettings.Columns];
 		}
 
 		public void SetGameField(int[] gameField)
@@ -74,7 +70,7 @@ namespace PirateBayMVC.Models
 				random = new Random((int)seed);
 			}
 
-			List<int> availableFields = CreateAvailableFieldsList();
+			List<int> availableFields = GameSettings.CreateAvailableFieldsList();
 			List<int[]> availableFieldTypes = new List<int[]>
 			{
 				//		{amount, type of field }
@@ -103,20 +99,8 @@ namespace PirateBayMVC.Models
 					this.GameField[availableFields[randomPosition]] = field[1];
 
 					availableFields.Remove(availableFields[randomPosition]);
-					//field[0]--;
 				}
 			}
-		}
-
-		private List<int> CreateAvailableFieldsList()
-		{
-			List<int> availableFields = new List<int>();
-			for (int i = 0; i < this._rows * this._columns; i++)
-			{
-				availableFields.Add(i);
-			}
-
-			return availableFields;
 		}
 
 		public void UseMirror()
