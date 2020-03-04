@@ -15,5 +15,7 @@ namespace PirateBayMVC.Models
 		{
 			AvailableFields = GameSettings.CreateAvailableFieldsList();
 		}
+
+		//private void
 	}
 }
