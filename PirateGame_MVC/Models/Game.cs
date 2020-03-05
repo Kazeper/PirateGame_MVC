@@ -16,6 +16,24 @@ namespace PirateBayMVC.Models
 			AvailableFields = GameSettings.CreateAvailableFieldsList();
 		}
 
-		//private void
+		public int GetNextField()
+		{
+			throw new NotImplementedException();
+		}
+
+		private void DeleteField()
+		{
+			throw new NotImplementedException();
+		}
+
+		private void SetFirstPlayer()
+		{
+			throw new NotImplementedException();
+		}
+
+		public void ReadPlayersFields()
+		{
+			throw new NotImplementedException();
+		}
 	}
 }
