@@ -49,7 +49,7 @@ namespace PirateBayMVC.Models
 
 		public Player()
 		{
-			GameField = new int[GameSettings.Rows * GameSettings.Columns];
+			GameField = new int[GameSettings.NumberOfRows * GameSettings.NumberOfColumns];
 		}
 
 		public void SetGameField(int[] gameField)

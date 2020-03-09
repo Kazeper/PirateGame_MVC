@@ -10,25 +10,38 @@ namespace PirateBayMVC.Models
 	{
 		public List<Player> Players { get; set; }
 		public List<int> AvailableFields { get; set; }
+		private Random random = new Random();
+		public int currentPlayer;
 
 		public Game()
 		{
 			AvailableFields = GameSettings.CreateAvailableFieldsList();
+			currentPlayer = SetFirstPlayer();
 		}
 
 		public int GetNextField()
 		{
-			throw new NotImplementedException();
+			int nextFieldIndex = random.Next(0, AvailableFields.Count);
+
+			return AvailableFields[nextFieldIndex];
 		}
 
-		private void DeleteField()
+		public string ReadFieldAsString(int field)
 		{
-			throw new NotImplementedException();
+			int x = (int)Math.Floor(((double)(field / GameSettings.NumberOfColumns)));
+			int y = (field % GameSettings.NumberOfColumns) + 1;
+
+			return (char)(x + 65) + y.ToString();
 		}
 
-		private void SetFirstPlayer()
+		private void DeleteField(int field)
 		{
-			throw new NotImplementedException();
+			AvailableFields.Remove(field);
+		}
+
+		private int SetFirstPlayer()
+		{
+			return random.Next(0, Players.Count);
 		}
 
 		public void ReadPlayersFields()
