@@ -10,13 +10,42 @@ namespace PirateBayMVC.Models
 	{
 		public List<Player> Players { get; set; }
 		public List<int> AvailableFields { get; set; }
-		private Random random = new Random();
-		public int currentPlayer;
 
-		public Game()
+		private Random random = new Random();
+		public int[] playerQueue;
+		public int currentPlayer;
+		public int drawField;
+
+		public Game(List<Player> players)
 		{
+			this.Players = players;
+
+			CreatePlayerQueue();
+			FillPlayerQueue();
 			AvailableFields = GameSettings.CreateAvailableFieldsList();
 			currentPlayer = SetFirstPlayer();
+		}
+
+		private void CreatePlayerQueue()
+		{
+			playerQueue = new int[Players.Count];
+		}
+
+		private void FillPlayerQueue()
+		{
+			int playerIndex = SetFirstPlayer();
+
+			for (int i = 0; i < playerQueue.Length; i++)
+			{
+				playerQueue[i] = playerIndex;
+
+				UpdatePlayerIndex(ref playerIndex);
+			}
+		}
+
+		private void UpdatePlayerIndex(ref int playerIndex)
+		{
+			playerIndex = (playerIndex % Players.Count) + 1;
 		}
 
 		public int GetNextField()
@@ -47,6 +76,14 @@ namespace PirateBayMVC.Models
 		public void ReadPlayersFields()
 		{
 			throw new NotImplementedException();
+		}
+
+		public void StartGame()
+		{
+			while (AvailableFields.Count > 0)
+			{
+				drawField = GetNextField();
+			}
 		}
 	}
 }
