@@ -21,18 +21,20 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">#LOGO</a>
+				<a class="offset-md-4 col-6 col-sm-2 col-lg-1" asp-area="" asp-controller="Home" asp-action="Index">
+					<img src="~/resources/Pirate-Logo.png" alt="Pirate Logo" class="img-fluid" />
+				</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
-						<li class="nav-item">
-							<a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Rules</a> <!-- //TODO set proper controler and action-->
+						<li class="nav-item col-md-2">
+							<a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Rules">Rules</a> <!-- //TODO set proper controler and action-->
 						</li>
-						<li class="nav-item">
-							<a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">How to play</a> <!-- //TODO set proper controler and action -->
+						<li class="nav-item col-lg-3">
+							<a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="HowToPlay">How to play</a> <!-- //TODO set proper controler and action -->
 						</li>
                     </ul>
                 </div>

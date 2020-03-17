@@ -86,8 +86,8 @@ namespace PirateBayMVC.Models
 			while (AvailableFields.Count > 0)
 			{
 				drawField = GetNextField();
-
 				ReadPlayersFields();
+				DeleteField(drawField);
 			}
 		}
 	}
