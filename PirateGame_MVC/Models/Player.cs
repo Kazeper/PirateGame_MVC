@@ -103,7 +103,136 @@ namespace PirateBayMVC.Models
 			}
 		}
 
-		public void UseMirror()
+		public void ExecuteAction(int drawField)
+		{
+			switch (GameField[drawField])
+			{
+				case 1:
+					RobSomeone();
+					break;
+
+				case 2:
+					KillSomeone();
+					break;
+
+				case 3:
+					GivePresent();
+					break;
+
+				case 4:
+					WipeOutField();
+					break;
+
+				case 5:
+					SwapMoney();
+					break;
+
+				case 6:
+					ChooseNextField();
+					break;
+
+				case 7:
+					VerifyShieldUse();
+					break;
+
+				case 8:
+					VerifyMirrorUse();
+					break;
+
+				case 9:
+					DetonateBomb();
+					break;
+
+				case 10:
+					DoubleTheWallet();
+					break;
+
+				case 11:
+					DepositCash();
+					break;
+
+				case 12:
+					AddCash(5000);
+					break;
+
+				case 13:
+					AddCash(3000);
+					break;
+
+				case 14:
+					AddCash(1000);
+					break;
+
+				case 15:
+					AddCash(200);
+					break;
+
+				default:
+					break;
+			}
+		}
+
+		private void AddCash(int money)
+		{
+			Wallet += money;
+		}
+
+		private void DepositCash()
+		{
+			Bank = Wallet;
+			Wallet = 0;
+		}
+
+		private void DoubleTheWallet()
+		{
+			Wallet *= 2;
+		}
+
+		private void DetonateBomb()
+		{
+			if (HasShield)
+			{
+				VerifyShieldUse();
+			}
+		}
+
+		private void ChooseNextField()
+		{
+			throw new NotImplementedException();
+		}
+
+		private void SwapMoney()
+		{
+			int tempMoney = this.Wallet;
+			//TODO finish
+		}
+
+		private void WipeOutField()
+		{
+			throw new NotImplementedException();
+		}
+
+		private void GivePresent()
+		{
+			throw new NotImplementedException();
+		}
+
+		private void KillSomeone()
+		{
+			throw new NotImplementedException();
+		}
+
+		private void RobSomeone()
+		{
+			throw new NotImplementedException();
+		}
+
+		public void SetFieldAsEmpty(int drawField)
+		{
+			GameField[drawField] = 0;
+		}
+
+		public void VerifyMirrorUse()
 		{
 			if (HasMirror)
 			{
@@ -111,7 +240,7 @@ namespace PirateBayMVC.Models
 			}
 		}
 
-		public void UseShield()
+		public void VerifyShieldUse()
 		{
 			if (HasShield)
 			{

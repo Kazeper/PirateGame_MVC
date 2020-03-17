@@ -75,7 +75,10 @@ namespace PirateBayMVC.Models
 
 		public void ReadPlayersFields()
 		{
-			throw new NotImplementedException();
+			for (int i = 0; i < Players.Count; i++)
+			{
+				Players[playerQueue[i]].ExecuteAction(drawField);
+			}
 		}
 
 		public void StartGame()
@@ -83,6 +86,8 @@ namespace PirateBayMVC.Models
 			while (AvailableFields.Count > 0)
 			{
 				drawField = GetNextField();
+
+				ReadPlayersFields();
 			}
 		}
 	}
