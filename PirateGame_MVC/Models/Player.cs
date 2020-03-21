@@ -1,13 +1,17 @@
 ﻿using PirateGame_MVC.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PirateBayMVC.Models
+namespace PirateGame_MVC
 {
 	public class Player
 	{
+		[Required]
+		[MinLength(3, ErrorMessage = "Your nickname should contains at least 3 characters")]
+		[MaxLength(20)]
 		public string Nickname { get; set; }
 
 		public bool gameFieldIsSet;

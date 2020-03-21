@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using PirateBayMVC.Models;
 using PirateGame_MVC.Models;
 
 namespace PirateGame_MVC.Controllers
@@ -22,7 +21,9 @@ namespace PirateGame_MVC.Controllers
 		{
 			if (ModelState.IsValid)
 			{
+				return RedirectToAction("Index", "Lobby");
 			}
+			else return View(player);
 		}
 
 		public IActionResult Privacy()
