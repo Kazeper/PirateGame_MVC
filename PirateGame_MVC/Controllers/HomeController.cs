@@ -13,10 +13,16 @@ namespace PirateGame_MVC.Controllers
 	{
 		public IActionResult Index()
 		{
-			Player player = new Player();
-			player.SetGameFieldRandomly(null);
-
 			return View();
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public IActionResult Index(Player player)
+		{
+			if (ModelState.IsValid)
+			{
+			}
 		}
 
 		public IActionResult Privacy()
