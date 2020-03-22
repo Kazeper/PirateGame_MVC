@@ -59,6 +59,7 @@ namespace PirateGame_MVC
 		public void SetGameField(int[] gameField)
 		{
 			this.GameField = gameField;
+			gameFieldIsSet = true;
 		}
 
 		public void SetGameFieldRandomly(int? seed)
@@ -105,6 +106,8 @@ namespace PirateGame_MVC
 					availableFields.Remove(availableFields[randomPosition]);
 				}
 			}
+
+			gameFieldIsSet = true;
 		}
 
 		public void ExecuteAction(int drawField)

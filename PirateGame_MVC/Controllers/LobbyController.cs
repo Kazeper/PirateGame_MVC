@@ -6,11 +6,17 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace PirateGame_MVC.Controllers
 {
-    public class LobbyController : Controller
-    {
-        public IActionResult Index()
-        {
-            return View();
-        }
-    }
+	public class LobbyController : Controller
+	{
+		public IActionResult Index()
+		{
+			return View();
+		}
+
+		[HttpPut]
+		[ValidateAntiForgeryToken]
+		public IActionResult Index()
+		{
+		}
+	}
 }
