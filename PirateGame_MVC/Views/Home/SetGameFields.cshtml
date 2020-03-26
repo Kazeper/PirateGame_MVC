@@ -1,0 +1,17 @@
+﻿@using PirateGame_MVC.Models;
+@model Player
+
+@{
+	ViewData["Title"] = "SetGameFields";
+}
+
+<h1>SetGameFields</h1>
+<br />
+
+@Model.Nickname
+<br /><br />
+@await Html.PartialAsync("_setgamefieldspartial",Model)
+
+
+
+

@@ -1,0 +1,31 @@
+﻿@using PirateGame_MVC.Models;
+@model Player
+
+<div class="container">
+
+	@{ 
+		int index = 0;
+
+		for (int i = 0; i < GameSettings.NumberOfRows; i++)
+		{
+			<div class="row">
+
+				@for (int j = 0; j < GameSettings.NumberOfColumns; j++)
+				{
+					<div class="col-1 border border-warning text-center d-flex" ondrop="drop(event)" ondragover="allowDrop(event)">
+					 <input asp-for="GameField[index]" type="hidden" />
+
+						 <div id="@index" class="img-fluid" draggable="true" ondragstart="drag(event)">
+					 		<img src="~/resources/#" alt="" />
+							<input value="@Model.GameField[index]" type="hidden" />
+						 </div>						
+					</div>
+					index++;
+				}
+
+			</div>
+		}
+	}
+
+</div>
+

@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29519.87
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PirateGame_MVC", "PirateGame_MVC\PirateGame_MVC.csproj", "{ADA831AD-63BE-4579-BADA-92D993CE4D0F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PirateGame_MVC", "PirateGame_MVC\PirateGame_MVC.csproj", "{ADA831AD-63BE-4579-BADA-92D993CE4D0F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PirateGame.tests", "PirateGame.tests\PirateGame.tests.csproj", "{2673EE14-A9C2-45FF-91F6-27684A0BF58F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PirateGame.tests", "PirateGame.tests\PirateGame.tests.csproj", "{2673EE14-A9C2-45FF-91F6-27684A0BF58F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

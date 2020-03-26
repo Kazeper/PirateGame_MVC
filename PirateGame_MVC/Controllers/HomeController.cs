@@ -21,9 +21,15 @@ namespace PirateGame_MVC.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				return RedirectToAction("Index", "Lobby");
+				return RedirectToAction(nameof(SetGameFields), player);
 			}
 			else return View(player);
+		}
+
+		public IActionResult SetGameFields(Player player)
+		{
+			player.SetGameFieldRandomly(null);
+			return View(player);
 		}
 
 		public IActionResult Privacy()

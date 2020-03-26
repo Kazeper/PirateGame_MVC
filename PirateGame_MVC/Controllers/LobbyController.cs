@@ -13,10 +13,10 @@ namespace PirateGame_MVC.Controllers
 			return View();
 		}
 
-		[HttpPut]
-		[ValidateAntiForgeryToken]
-		public IActionResult Index()
-		{
-		}
+		//[HttpPut]
+		//[ValidateAntiForgeryToken]
+		//public IActionResult Index()
+		//{
+		//}
 	}
 }
