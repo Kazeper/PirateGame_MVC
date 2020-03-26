@@ -12,9 +12,12 @@ function drop(e) {
 	var parentID = e.dataTransfer.getData("handlerParent");
 
 	const parent = document.getElementById(parentID);
+	var targetParentID = e.target.parentElement.id;
+	const targetParent = document.getElementById(targetParentID);
 
-	parent.appendChild(e.target.childNodes[2]);
-	e.target.appendChild(document.getElementById(data));
+	//parent.appendChild(e.target.childNodes[2]);
+	parent.appendChild(e.target);
+	targetParent.appendChild(document.getElementById(data));
 
 	//(document.getElementById(data)).appendChild(target);
 	//parent.appendChild(document.getElementById('#' + e.target.id + ' .img-fluid'));

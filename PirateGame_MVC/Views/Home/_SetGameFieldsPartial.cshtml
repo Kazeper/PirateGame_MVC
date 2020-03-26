@@ -5,6 +5,7 @@
 
 	@{ 
 		int index = 0;
+		string imgPath;
 
 		for (int i = 0; i < GameSettings.NumberOfRows; i++)
 		{
@@ -12,13 +13,16 @@
 
 				@for (int j = 0; j < GameSettings.NumberOfColumns; j++)
 				{
-					<div id="@i _@j" class="col-1 border border-warning text-center d-flex" ondrop="drop(event)" ondragover="allowDrop(event)">
-					 <input asp-for="GameField[index]" type="hidden" />
-						
-						 <div id="@index" class="img-fluid" draggable="true" ondragstart="drag(event)">
-					 		<img src="~/resources/#" alt="" /> @index
+					<div id="@i _@j" class="col-1 border border-warning text-center d-flex">
+						<input asp-for="GameField[index]" type="hidden" />
+						@{ 
+							imgPath = @Model.GameField[index].ToString() + ".jpg";
+						}
+						<div id="@index" class="img-fluid">
+					 		<img id="i -@j" class="img-fluid" src="~/resources/@imgPath" alt="" draggable="true" ondragstart="drag(event)"  ondrop="drop(event)" ondragover="allowDrop(event)" />
 							<input value="@Model.GameField[index]" type="hidden" />
-						 </div>						
+						</div>
+											
 					</div>
 					index++;
 				}
