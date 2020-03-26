@@ -12,11 +12,11 @@
 
 				@for (int j = 0; j < GameSettings.NumberOfColumns; j++)
 				{
-					<div class="col-1 border border-warning text-center d-flex" ondrop="drop(event)" ondragover="allowDrop(event)">
+					<div id="@i _@j" class="col-1 border border-warning text-center d-flex" ondrop="drop(event)" ondragover="allowDrop(event)">
 					 <input asp-for="GameField[index]" type="hidden" />
-
+						
 						 <div id="@index" class="img-fluid" draggable="true" ondragstart="drag(event)">
-					 		<img src="~/resources/#" alt="" />
+					 		<img src="~/resources/#" alt="" /> @index
 							<input value="@Model.GameField[index]" type="hidden" />
 						 </div>						
 					</div>
