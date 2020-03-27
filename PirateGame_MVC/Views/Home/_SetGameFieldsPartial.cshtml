@@ -19,7 +19,7 @@
 							imgPath = @Model.GameField[index].ToString() + ".jpg";
 						}
 						<div id="@index" class="img-fluid">
-					 		<img id="i -@j" class="img-fluid" src="~/resources/@imgPath" alt="" draggable="true" ondragstart="drag(event)"  ondrop="drop(event)" ondragover="allowDrop(event)" />
+					 		<img id="@i -@j" class="img-fluid" src="~/resources/@imgPath" alt="" draggable="true" ondragstart="drag(event)"  ondrop="drop(event)" ondragover="allowDrop(event)" />
 							<input value="@Model.GameField[index]" type="hidden" />
 						</div>
 											
