@@ -21,14 +21,15 @@ namespace PirateGame_MVC.Controllers
 		{
 			if (ModelState.IsValid)
 			{
+				player.SetGameFieldRandomly(null);
 				return RedirectToAction(nameof(SetGameFields), player);
 			}
 			else return View(player);
 		}
 
+		[HttpGet]
 		public IActionResult SetGameFields(Player player)
 		{
-			player.SetGameFieldRandomly(null);
 			return View(player);
 		}
 
