@@ -10,6 +10,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PirateGame_MVC.Models;
+using PirateGame_MVC.GameLobby;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace PirateGame_MVC
 {
@@ -33,6 +37,10 @@ namespace PirateGame_MVC
 			});
 
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+			Lobby gameLobby = new Lobby();
+			services.AddSingleton(gameLobby);
+
+			services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

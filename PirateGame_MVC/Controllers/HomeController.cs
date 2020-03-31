@@ -3,13 +3,25 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PirateGame_MVC.Models;
+using PirateGame_MVC.GameLobby;
+using System.Net;
 
 namespace PirateGame_MVC.Controllers
 {
 	public class HomeController : Controller
 	{
+		private IHttpContextAccessor _accessor;
+		private Lobby _gameLobby;
+
+		public HomeController(IHttpContextAccessor accessor, Lobby gameLobby)
+		{
+			_accessor = accessor;
+			_gameLobby = gameLobby;
+		}
+
 		public IActionResult Index()
 		{
 			return View();
@@ -19,17 +31,26 @@ namespace PirateGame_MVC.Controllers
 		[ValidateAntiForgeryToken]
 		public IActionResult Index(Player player)
 		{
+			IActionResult result;
+
 			if (ModelState.IsValid)
 			{
+				player.Ip = _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
 				player.SetGameFieldRandomly(null);
-				return RedirectToAction(nameof(SetGameFields), player);
+				_gameLobby.Players.Add(player);
+
+				result = RedirectToAction(nameof(SetGameFields));
 			}
-			else return View(player);
+			else result = View(player);
+
+			return result;
 		}
 
-		[HttpGet]
-		public IActionResult SetGameFields(Player player)
+		public IActionResult SetGameFields()
 		{
+			string ip = _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
+			Player player = _gameLobby.Players.Find(m => m.Ip.Equals(ip));
+
 			return View(player);
 		}
 
