@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using PirateGame_MVC.Models.Validation;
 
 namespace PirateGame_MVC
 {
@@ -26,6 +27,7 @@ namespace PirateGame_MVC
 
 		public int Wallet { get; set; }
 
+		[GameField()]
 		public int[] GameField { get; set; }
 
 		#region GameField Description
@@ -57,6 +59,7 @@ namespace PirateGame_MVC
 		public Player()
 		{
 			GameField = new int[GameSettings.NumberOfRows * GameSettings.NumberOfColumns];
+			SetGameFieldRandomly(null);
 		}
 
 		public void SetGameField(int[] gameField)

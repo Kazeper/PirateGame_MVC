@@ -2,21 +2,34 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PirateGame_MVC.GameLobby;
 
 namespace PirateGame_MVC.Controllers
 {
 	public class LobbyController : Controller
 	{
-		public IActionResult Index()
+		private IHttpContextAccessor _accessor;
+		private Lobby _gameLobby;
+
+		public LobbyController(Lobby gameLobby, IHttpContextAccessor accessor)
 		{
-			return View();
+			_accessor = accessor;
+			_gameLobby = gameLobby;
 		}
 
-		//[HttpPut]
-		//[ValidateAntiForgeryToken]
-		//public IActionResult Index()
-		//{
-		//}
+		public IActionResult Index()
+		{
+			Player connPlayer = GetConnectedPlayer();
+			return View(connPlayer);
+		}
+
+		private Player GetConnectedPlayer()
+		{
+			string ip = _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
+
+			return _gameLobby.Players.Find(m => m.Ip.Equals(ip));
+		}
 	}
 }

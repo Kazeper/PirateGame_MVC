@@ -37,6 +37,7 @@ namespace PirateGame_MVC
 			});
 
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
 			Lobby gameLobby = new Lobby();
 			services.AddSingleton(gameLobby);
 

@@ -36,7 +36,6 @@ namespace PirateGame_MVC.Controllers
 			if (ModelState.IsValid)
 			{
 				player.Ip = _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
-				player.SetGameFieldRandomly(null);
 				_gameLobby.Players.Add(player);
 
 				result = RedirectToAction(nameof(SetGameFields));
@@ -48,10 +47,29 @@ namespace PirateGame_MVC.Controllers
 
 		public IActionResult SetGameFields()
 		{
-			string ip = _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
-			Player player = _gameLobby.Players.Find(m => m.Ip.Equals(ip));
+			Player player = GetConnectedPlayer();
 
 			return View(player);
+		}
+
+		private Player GetConnectedPlayer()
+		{
+			string ip = _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
+
+			return _gameLobby.Players.Find(m => m.Ip.Equals(ip));
+		}
+
+		[HttpPost]
+		public IActionResult SetGameFields(Player player)
+		{
+			if (ModelState.IsValid)
+			{
+				Player connPlayer = GetConnectedPlayer();//TODO sprawdzic Gamefield
+				connPlayer.SetGameField(player.GameField);
+
+				return RedirectToAction("Index", "Lobby");
+			}
+			else return View(player);
 		}
 
 		public IActionResult Privacy()

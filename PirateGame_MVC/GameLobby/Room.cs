@@ -7,10 +7,11 @@ namespace PirateGame_MVC.GameLobby
 {
 	public class Room
 	{
-		public List<Player> players { get; set; }
+		public List<Player> Players { get; set; }
 
 		public Room()
 		{
+			Players = new List<Player>();
 		}
 	}
 }
