@@ -14,6 +14,7 @@
 @Html.ValidationSummary(false, "", new { @class = "text-danger" })
 <div class="container">
 	<form asp-action="SetGameFields">
+		<input asp-for="@Model.Nickname" value="@Model.Nickname" type="hidden" />
 
 		@{
 			int index = 0;
