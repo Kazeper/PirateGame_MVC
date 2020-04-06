@@ -14,6 +14,7 @@ using PirateGame_MVC.GameLobby;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.HttpOverrides;
+using WebSocketManager;
 
 namespace PirateGame_MVC
 {
@@ -35,7 +36,7 @@ namespace PirateGame_MVC
 				options.CheckConsentNeeded = context => true;
 				options.MinimumSameSitePolicy = SameSiteMode.None;
 			});
-
+			services.AddWebSocketManager();
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
 			Lobby gameLobby = new Lobby();
@@ -45,7 +46,7 @@ namespace PirateGame_MVC
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-		public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+		public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider serviceProvider)
 		{
 			if (env.IsDevelopment())
 			{
@@ -61,6 +62,9 @@ namespace PirateGame_MVC
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
 			app.UseCookiePolicy();
+
+			app.UseWebSockets();
+			app.MapWebSocketManager("/server", serviceProvider.GetService<PlayerHandler>());
 
 			app.UseMvc(routes =>
 			{
