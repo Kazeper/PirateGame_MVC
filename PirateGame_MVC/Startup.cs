@@ -14,7 +14,7 @@ using PirateGame_MVC.GameLobby;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.HttpOverrides;
-using WebSocketManager;
+using PirateGame_MVC.Sockets;
 
 namespace PirateGame_MVC
 {
@@ -59,12 +59,12 @@ namespace PirateGame_MVC
 				app.UseHsts();
 			}
 
+			app.UseWebSockets();
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
 			app.UseCookiePolicy();
 
-			app.UseWebSockets();
-			app.MapWebSocketManager("/server", serviceProvider.GetService<PlayerHandler>());
+			app.MapSockets("/ws", serviceProvider.GetService<WebSocketMessageHandler>());
 
 			app.UseMvc(routes =>
 			{
