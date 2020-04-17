@@ -4,57 +4,59 @@
 	ViewData["Title"] = "SetGameFields";
 }
 
-<h1>SetGameFields</h1>
-<br />
+<div class="text-center">
+	<h1>Set Game Fields</h1>
+	<br />
+</div>
 
 @Model.Nickname
 <br />
 <br />
 
 @Html.ValidationSummary(false, "", new { @class = "text-danger" })
-<div class="container">
-	<form asp-action="SetGameFields">
-		<input asp-for="@Model.Nickname" value="@Model.Nickname" type="hidden" />
+<div class="justify-content-center">
+	<div class="container">
+		<form asp-action="SetGameFields">
+			<input asp-for="@Model.Nickname" value="@Model.Nickname" type="hidden" />
 
-		@{
-			int index = 0;
-			string imgPath;
+			@{
+				int index = 0;
+				string imgPath;
 
-			for (int i = 0; i < GameSettings.NumberOfRows; i++)
-			{
-				<div class="row">
+				for (int i = 0; i < GameSettings.NumberOfRows; i++)
+				{
+					<div class="row justify-content-center">
 
-					@for (int j = 0; j < GameSettings.NumberOfColumns; j++)
-					{
-						<div id="@i _@j" class="col-1 border border-warning text-center">
+						@for (int j = 0; j < GameSettings.NumberOfColumns; j++)
+						{
+							<div id="@i _@j" class="col-1 border border-warning text-center">
 
-							@{
-								imgPath = @Model.GameField[index].ToString() + ".jpg";
-							}
-							<div id="_@index" class="img-fluid">
-								<input asp-for="@Model.GameField[index]" value="@Model.GameField[index]" type="hidden" />
-								<img id="@i -@j" class="img-fluid" src="~/resources/@imgPath" alt="" draggable="true" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)" />
+								@{
+									imgPath = @Model.GameField[index].ToString() + ".jpg";
+								}
+								<div id="_@index" class="img-fluid">
+									<input asp-for="@Model.GameField[index]" value="@Model.GameField[index]" type="hidden" />
+									<img id="@i -@j" class="img-fluid" src="~/resources/@imgPath" alt="" draggable="true" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)" />
+								</div>
+
 							</div>
+							index++;
+						}
 
-						</div>
-						index++;
-					}
-
-				</div>
+					</div>
+				}
 			}
-		}
-		<hr />
-		<div class="row">
-			<div class="offset-6 col-6 col-md-1">
+			<hr />
+			<div class="row justify-content-center">
 				<button type="submit" class="btn btn-dark text-center text-light">Submit</button>
 			</div>
-		</div>
-	</form>
-
-
+		</form>
+	</div>
 </div>
-
-
+@section Scripts
+{
+	<script src="~/js/setGameField.js"></script>
+}
 
 
 
