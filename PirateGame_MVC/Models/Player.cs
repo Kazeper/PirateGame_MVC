@@ -14,11 +14,11 @@ namespace PirateGame_MVC
 		[Required]
 		[MinLength(3, ErrorMessage = "Your nickname should contains at least 3 characters")]
 		[MaxLength(20)]
+		[Nickname()]
 		public string Nickname { get; set; }
 
 		public string Ip { get; set; }
 
-		[Required]
 		public string ConnectionId { get; set; }
 
 		public bool gameFieldIsSet;

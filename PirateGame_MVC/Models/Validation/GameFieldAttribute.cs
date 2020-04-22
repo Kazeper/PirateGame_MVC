@@ -12,7 +12,6 @@ namespace PirateGame_MVC.Models.Validation
 
 		public GameFieldAttribute()
 		{
-			//GameField = gameField;
 		}
 
 		public string GetErrorMessage() => "values of some fields are invalid.";
@@ -67,6 +66,7 @@ namespace PirateGame_MVC.Models.Validation
 			foreach (int[] tab in AvailableFieldTypes)
 			{
 				isEqual = (tab[amountIndex] == amountOfIndividualFieldType[index][amountIndex]) && (tab[valueIndex] == amountOfIndividualFieldType[index][valueIndex]);
+
 				if (!isEqual)
 				{
 					result = false;
