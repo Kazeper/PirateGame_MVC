@@ -31,18 +31,15 @@ namespace PirateGame_MVC.Controllers
 		[ValidateAntiForgeryToken]
 		public IActionResult Index(Player player)
 		{
-			IActionResult result;
-
 			if (ModelState.IsValid)
 			{
 				player.Ip = _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
 				_gameLobby.Players.Add(player);
+				TempData["playerNickname"] = player.Nickname;
 
-				result = RedirectToAction(nameof(SetGameFields));
+				return RedirectToAction("Index", "Lobby");
 			}
-			else result = View(player);
-
-			return result;
+			else return View(player);
 		}
 
 		public IActionResult SetGameFields()
@@ -64,7 +61,7 @@ namespace PirateGame_MVC.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				Player connPlayer = GetConnectedPlayer();//TODO sprawdzic Gamefield
+				Player connPlayer = GetConnectedPlayer();
 				connPlayer.SetGameField(player.GameField);
 
 				return RedirectToAction("Index", "Lobby");

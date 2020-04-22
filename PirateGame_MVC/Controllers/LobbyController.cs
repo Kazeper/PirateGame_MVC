@@ -21,15 +21,14 @@ namespace PirateGame_MVC.Controllers
 
 		public IActionResult Index()
 		{
-			Player connPlayer = GetConnectedPlayer();
-			return View(connPlayer);
+			return View();
 		}
 
-		private Player GetConnectedPlayer()
-		{
-			string ip = _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
+		//private Player GetConnectedPlayer()
+		//{
+		//	string ip = _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
 
-			return _gameLobby.Players.Find(m => m.Ip.Equals(ip));
-		}
+		//	return _gameLobby.Players.Find(m => m.Ip.Equals(ip));
+		//}
 	}
 }

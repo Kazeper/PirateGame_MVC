@@ -14,14 +14,18 @@
 		<div class="row">
 			<div class="offset-md-4 col-md-4">
 				<input type="text" asp-for="Nickname" class="form-control" placeholder="Nickname" />
+				<input Id="playerConnId" type="hidden" asp-for="ConnectionId" />
 			</div>
 		</div>
 		<br />
 		<div class="row">
 			<div class="offset-md-4 col-md-4">
-				<button type="submit" class="btn btn-dark text-light">Submit</button>
+				<button id="sendButton" type="submit" class="btn btn-dark text-light">Submit</button>
 			</div>
 		</div>
 	</form>
 
 </div>
+
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/startup.js"></script>

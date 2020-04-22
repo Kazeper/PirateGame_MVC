@@ -1,14 +1,52 @@
-﻿@model Player
+﻿
 @{
-    ViewData["Title"] = "Lobby";
+	ViewData["Title"] = "Lobby";
 }
 
-<h1>Lobby</h1>
+<h1 class="justify-content-center">Lobby</h1>
 
-Hello @Model.Nickname
+Hello
+@{
+	if (TempData["playerNickname"] is null)
+	{
+		<h2> Go to <a asp-controller="Home" asp-action="Index">startpage</a> and set your nickname</h2>
+
+	}
+
+	else
+	{
+		<div class="container">
+
+			<div class="row">
+				<div class="col-md 6">
+					<select name="rooms" size="50">
+					</select>
+				</div>
+				<div class="col-md 6">
+
+				</div>
+
+			</div>
 
 
-@section Scripts
-{
-	<script src="~/js/gameLobby.js"></script>
+			<input type="hidden" value="@TempData["playerNickname"]" id="playerNickname" />
+
+			<div class="row">
+				<div class="col-2">Message</div>
+				<div class="col-4"><input type="text" id="messageInput" /></div>
+			</div>
+
+			<input type="button" id="sendButton" value="Send Message" />
+
+			<div class="row">
+				<div class="col-6">
+					<ul id="messagesList"></ul>
+				</div>
+			</div>
+		</div>
+
+		<script src="~/js/signalr/dist/browser/signalr.js"></script>
+		<script src="~/js/gameLobby.js"></script>
+	}
 }
+

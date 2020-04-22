@@ -18,6 +18,9 @@ namespace PirateGame_MVC
 
 		public string Ip { get; set; }
 
+		[Required]
+		public string ConnectionId { get; set; }
+
 		public bool gameFieldIsSet;
 
 		public bool HasMirror { get; private set; }

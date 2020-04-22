@@ -1,21 +1,29 @@
-﻿//var uri = "ws://localhost:5000/ws";
+﻿"use strict";
 
-var scheme = document.location.protocol === "https:" ? "wss" : "ws";
-var port = document.location.port ? (":" + document.location.port) : "";
-var uri = scheme + "://" + document.location.hostname + port + "/ws";
-function connect() {
-	socket = new WebSocket(scheme + "://" + document.location.hostname + port + "/ws");
-	socket.onopen = function (e) {
-		console.log("conn esatblished");
-		console.log(uri);
-	};
+var connection = new signalR.HubConnectionBuilder().withUrl("/Lobby/Index").build();
 
-	socket.onclose = function (e) {
-		console.log("conn closed");
-	};
+//Disable send button until connection is established
+document.getElementById("sendButton").disabled = true;
 
-	socket.onmessage = function (e) {
-		console.log("send MSG");
-	};
-};
-connect();
+connection.on("ReceiveMessage", function (user, message) {
+	var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+	var encodedMsg = user + " says " + msg;
+	var li = document.createElement("li");
+	li.textContent = encodedMsg;
+	document.getElementById("messagesList").appendChild(li);
+});
+
+connection.start().then(function () {
+	document.getElementById("sendButton").disabled = false;
+}).catch(function (err) {
+	return console.error(err.toString());
+});
+
+document.getElementById("sendButton").addEventListener("click", function (event) {
+	var user = document.getElementById("playerNickname").value;
+	var message = document.getElementById("messageInput").value;
+	connection.invoke("SendMessage", user, message).catch(function (err) {
+		return console.error(err.toString());
+	});
+	event.preventDefault();
+});
