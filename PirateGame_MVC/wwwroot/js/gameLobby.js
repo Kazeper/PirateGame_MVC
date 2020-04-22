@@ -1,26 +1,27 @@
 ﻿"use strict";
-window.addEventListener("load", function (e) {
-	var connection = new signalR.HubConnectionBuilder().withUrl("/Lobby/Index").build();
-	//Disable send button until connection is established
-	document.getElementById("sendButton").disabled = true;
+var connection = new signalR.HubConnectionBuilder().withUrl("/Lobby/Index").build();
+//Disable send button until connection is established
+document.getElementById("sendButton").disabled = true;
 
-	connection.start().then(function () {
-		document.getElementById("sendButton").disabled = false;
-	}).catch(function (err) {
-		return console.error(err.toString());
-	});
-
-	connection.invoke("setPlayerId").catch(function (err) {
-		return console.error(err.toString());
-	});
+connection.start().then(function () {
+	document.getElementById("sendButton").disabled = false;
+}).catch(function (err) {
+	return console.error(err.toString());
 });
 
 connection.on("ReceiveMessage", function (user, message) {
 	var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-	var encodedMsg = user + " says " + msg;
-	var li = document.createElement("li");
-	li.textContent = encodedMsg;
-	document.getElementById("messagesList").appendChild(li);
+	var encodedMsg = user + ": " + msg;
+
+	var newDiv = document.createElement("div");
+	newDiv.setAttribute("class", "chat-bubble chat-bubble--left");
+	newDiv.textContent = encodedMsg;
+
+	var divNoGutters = document.createElement("div");
+	divNoGutters.setAttribute("class", "row no-gutters");
+	divNoGutters.appendChild(newDiv);
+
+	(document.querySelector(".chat-panel").appendChild(divNoGutters));
 });
 
 document.getElementById("sendButton").addEventListener("click", function (event) {

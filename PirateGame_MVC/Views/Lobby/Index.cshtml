@@ -2,10 +2,12 @@
 @{
 	ViewData["Title"] = "Lobby";
 }
+<div  class="d-flex justify-content-center">
+	<h1>Lobby</h1>
+	<br/> <br/>
+</div>
 
-<h1 class="justify-content-center">Lobby</h1>
 
-Hello
 @{
 	if (TempData["playerNickname"] is null)
 	{
@@ -19,10 +21,23 @@ Hello
 
 			<div class="row">
 				<div class="col-md 6">
-					<select class="col-md 6" name="rooms" size="50">
+					<select id="roomSelect" class="col-md 6 form-control" name="rooms" size="10">
 					</select>
 				</div>
-				<div class="col-md 6">
+				<div id="chat" class="col-md 6">
+
+					<div class="row">
+						<div class="col-12">
+							<div class="chat-box-tray">
+								<input id="messageInput" type="text" placeholder=" Type your message here...">
+								<div class=""></div>
+								<button id="sendButton" class="offset-1 material-icons" type="button">send</button>
+							</div>
+						</div>
+					</div>
+					<div class="chat-panel">
+
+					</div>
 
 				</div>
 
@@ -30,19 +45,7 @@ Hello
 
 
 			<input type="hidden" value="@TempData["playerNickname"]" id="playerNickname" />
-
-			<div class="row">
-				<div class="col-2">Message</div>
-				<div class="col-4"><input type="text" id="messageInput" /></div>
-			</div>
-
-			<input type="button" id="sendButton" value="Send Message" />
-
-			<div class="row">
-				<div class="col-6">
-					<ul id="messagesList"></ul>
-				</div>
-			</div>
+			<br/>
 		</div>
 
 		<script src="~/js/signalr/dist/browser/signalr.js"></script>
