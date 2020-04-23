@@ -13,8 +13,8 @@ namespace PirateGame_MVC.Controllers
 {
 	public class HomeController : Controller
 	{
-		private IHttpContextAccessor _accessor;
-		private Lobby _gameLobby;
+		private readonly IHttpContextAccessor _accessor;
+		private readonly Lobby _gameLobby;
 
 		public HomeController(IHttpContextAccessor accessor, Lobby gameLobby)
 		{

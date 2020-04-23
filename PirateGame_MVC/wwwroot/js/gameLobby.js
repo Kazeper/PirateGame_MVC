@@ -1,45 +1,39 @@
-﻿"use strict";
-var connection = new signalR.HubConnectionBuilder().withUrl("/Lobby/Index").build();
-//Disable send button until connection is established
-document.getElementById("sendButton").disabled = true;
+﻿var connection = new signalR.HubConnectionBuilder().withUrl("/Lobby/Index").build();
+const openCreateRoomButton = document.querySelectorAll('[data-modal-target]');
+const closeCreateRoomButton = document.querySelectorAll('[data-close-button]');
+const overlay = document.getElementById('overlay');
 
-var testDiv = document.getElementById("testt");
-testDiv.textContent = playerNickname.toString();
-
-connection.start().then(function () {
-	document.getElementById("sendButton").disabled = false;
-}).catch(function (err) {
-	return console.error(err.toString());
+openCreateRoomButton.forEach(button => {
+	button.addEventListener('click', () => {
+		const createRoomModal = document.querySelector(button.dataset.modalTarget)
+		openCreateRoomModal(createRoomModal);
+	})
 });
 
-connection.on("ReceiveMessage", function (user, message) {
-	var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-	var encodedMsg = user + ": " + msg;
-	var newDiv = document.createElement("div");
-	var divNoGutters = document.createElement("div");
+overlay.addEventListener('click', () => {
+	const modals = document.querySelectorAll('.create-room.acitve')
+	modals.forEach(modal => {
+		closeCreateRoomModal(modal);
+	})
+})
 
-	if (playerNickname == user) {
-		newDiv.setAttribute("class", "chat-bubble-right");
-		divNoGutters.setAttribute("class", "row no-gutters d-flex flex-row-reverse");
-		divNoGutters.appendChild(newDiv);
-		console.log("rue");
-	}
-	else {
-		newDiv.setAttribute("class", "chat-bubble-left");
-		divNoGutters.setAttribute("class", "row no-gutters");
-		divNoGutters.appendChild(newDiv);
-		console.log("false");
-	}
-
-	newDiv.textContent = encodedMsg;
-
-	(document.querySelector(".chat-panel").appendChild(divNoGutters));
+closeCreateRoomButton.forEach(button => {
+	button.addEventListener('click', () => {
+		const createRoomModal = button.closest('.create-room');
+		closeCreateRoomModal(createRoomModal);
+	})
 });
 
-document.getElementById("sendButton").addEventListener("click", function (event) {
-	var message = document.getElementById("messageInput").value;
-	connection.invoke("SendMessage", playerNickname, message).catch(function (err) {
-		return console.error(err.toString());
-	});
-	event.preventDefault();
-});
+function openCreateRoomModal(createRoomModal) {
+	if (createRoomModal == null) return
+
+	createRoomModal.classList.add('active');
+	overlay.classList.add('active');
+};
+
+function closeCreateRoomModal(createRoomModal) {
+	if (createRoomModal == null) return
+
+	createRoomModal.classList.remove('active');
+	overlay.classList.remove('active');
+};
