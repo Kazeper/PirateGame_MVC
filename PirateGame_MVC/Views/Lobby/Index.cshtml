@@ -1,15 +1,20 @@
-﻿
+﻿@using Microsoft.AspNetCore.Http;
 @{
 	ViewData["Title"] = "Lobby";
 }
-<div  class="d-flex justify-content-center">
+<div class="d-flex justify-content-center">
 	<h1>Lobby</h1>
-	<br/> <br/>
+	<br /> <br />
+</div>
+<script type="text/javascript">
+          var playerNickname = '@Context.Session.GetString("playerNickname")';
+</script>
+<div id="testt">
+
 </div>
 
-
 @{
-	if (TempData["playerNickname"] is null)
+	if (Context.Session.GetString("playerNickname") is null)
 	{
 		<h2> Go to <a asp-controller="Home" asp-action="Index">startpage</a> and set your nickname</h2>
 
@@ -42,10 +47,7 @@
 				</div>
 
 			</div>
-
-
-			<input type="hidden" value="@TempData["playerNickname"]" id="playerNickname" />
-			<br/>
+			<br />
 		</div>
 
 		<script src="~/js/signalr/dist/browser/signalr.js"></script>

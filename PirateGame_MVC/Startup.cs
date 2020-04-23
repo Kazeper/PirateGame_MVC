@@ -43,6 +43,7 @@ namespace PirateGame_MVC
 			services.AddSingleton(gameLobby);
 
 			services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+			services.AddSession(options => options.IdleTimeout = TimeSpan.FromSeconds(1800));
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -67,6 +68,7 @@ namespace PirateGame_MVC
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
 			app.UseCookiePolicy();
+			app.UseSession();
 
 			app.UseMvc(routes =>
 			{

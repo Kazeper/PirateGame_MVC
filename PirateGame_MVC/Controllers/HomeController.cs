@@ -24,6 +24,11 @@ namespace PirateGame_MVC.Controllers
 
 		public IActionResult Index()
 		{
+			if (HttpContext.Session.GetString("playerNickname") != null)
+			{
+				return RedirectToAction("Index", "Lobby");
+			}
+
 			return View();
 		}
 
@@ -33,8 +38,15 @@ namespace PirateGame_MVC.Controllers
 		{
 			if (ModelState.IsValid)
 			{
+				if (HttpContext.Session.GetString("playerNickname") != null)
+				{
+					return RedirectToAction("Index");
+				}
+
 				player.Ip = _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
 				_gameLobby.Players.Add(player);
+				HttpContext.Session.SetString("playerNickname", player.Nickname);
+
 				TempData["playerNickname"] = player.Nickname;
 
 				return RedirectToAction("Index", "Lobby");

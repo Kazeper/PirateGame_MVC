@@ -25,63 +25,11 @@
 
 /*new */
 
-
-
-/* .settings-tray {
-  background: #eee;
-  padding: 10px 15px;
-  border-radius: 7px;
-  
-  .no-gutters {
-    padding: 0;
-  }
-  
-  &--right {
-    float: right;
-    
-    i {
-      margin-top: 10px;
-      font-size: 25px;
-      color: grey;
-      margin-left: 14px;
-      transition: .3s;
-      
-      &:hover {
-        color: $blue;
-        cursor: pointer;
-      }
-    }
-  }
-} */
-
-
-
 input {
+  font-size: 12px;
   border: none;
   border-radius: 5px;
   width: 80%;
-
-  &::placeholder {
-    color: #606060;
-    font-weight: 300;
-    margin-left: 20px;
-  }
-
-  &:focus {
-    outline: none;
-  }
-}
-  
-  &--onhover:hover {
-    background: $blue;
-    cursor: pointer;
-    
-    p,
-    h6,
-    .time {
-      color: #fff !important;
-    }
-  }
 }
 
 hr {
@@ -89,42 +37,25 @@ hr {
   width: 60%;
 }
 
-.chat-bubble {
+.chat-bubble-left {
+  font-size: 12px;
   padding: 10px 14px;
   background: #606060;
   margin: 10px 12px;
   border-radius: 9px;
   position: relative;
   animation: fadeIn 0.5s ease-in;
+}
+
+.chat-bubble-right {
+  font-size: 12px;
+  padding: 10px 14px;
+  background: #900090;
+  margin: 10px 12px;
+  border-radius: 9px;
+  position: relative;
+  animation: fadeIn 0.5s ease-in;
   
-  &:after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    width: 0;
-    height: 0;
-    border: 20px solid transparent;
-    border-bottom: 0;
-    margin-top: -10px;
-  }
-  
-  &--left {
-     &:after {
-      left: 0;
-      border-right-color: #eee;
-	    border-left: 0;
-      margin-left: -20px;
-    }
-  } 
-  
-  &--right {
-    &:after {
-      right: 0;
-      border-left-color: $blue;
-	    border-right: 0;
-      margin-right: -20px;
-    }
-  }
 }
 
 @keyframes fadeIn {
@@ -144,21 +75,6 @@ hr {
   align-items: center;
   margin-top: 12px;
   bottom: 0;
-  
-  input {
-    margin: 0 10px;
-    padding: 6px 2px;
-  }
-  
-  i {
-    color: inherit;
-    font-size: 30px;
-    vertical-align: middle;
-    
-    &:last-of-type {
-      margin-left: 25px;
-    }
-  }
 }
 
 button{
