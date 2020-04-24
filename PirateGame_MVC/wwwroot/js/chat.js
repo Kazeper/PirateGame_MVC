@@ -1,5 +1,6 @@
 ﻿"use strict";
 var connection = new signalR.HubConnectionBuilder().withUrl("/Lobby/Index").build();
+
 //Disable send button until connection is established
 document.getElementById("sendButton").disabled = true;
 
@@ -22,7 +23,7 @@ connection.on("ReceiveMessage", function (user, message) {
 		newDiv.setAttribute("class", "chat-bubble-right");
 		divNoGutters.setAttribute("class", "row no-gutters d-flex flex-row-reverse");
 		divNoGutters.appendChild(newDiv);
-		console.log("rue");
+		console.log("true");
 	}
 	else {
 		newDiv.setAttribute("class", "chat-bubble-left");
@@ -32,7 +33,6 @@ connection.on("ReceiveMessage", function (user, message) {
 	}
 
 	newDiv.textContent = encodedMsg;
-
 	(document.querySelector(".chat-panel").appendChild(divNoGutters));
 });
 
@@ -42,4 +42,28 @@ document.getElementById("sendButton").addEventListener("click", function (event)
 		return console.error(err.toString());
 	});
 	event.preventDefault();
+});
+
+const createRoom = document.querySelector('[data-create-button]');
+
+createRoom.addEventListener("click", function (event) {
+	var roomName = document.getElementById('roomName').value;
+	var maxPlayers = document.getElementById('maxPlayers').value;
+	if (true) {
+	}
+	connection.invoke("CreateRoom", roomName, maxPlayers, playerNickname).catch(function (err) {
+		return console.error(err.toString());
+	});
+	event.preventDefault();
+	var modal = document.querySelector('.create-room.acitve');
+	closeCreateRoomModal(modal);
+});
+
+connection.on("AddRoomToList", function (roomId, message) {
+	var roomSelect = document.getElementById('roomSelect');
+	var option = document.createElement('option');
+	option.value = roomId;
+	option.textContent = message;
+
+	roomSelect.appendChild(option);
 });

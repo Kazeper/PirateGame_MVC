@@ -61,7 +61,27 @@
 			</div>
 
 			<div class="create-room-body">
-				Lorem ipsum dolor sit amet
+				<br />
+				<div class="row">
+					<div class="offset-1 col-4 text-right">
+						room name:
+					</div>
+					<input id="roomName" type="text" class="col-6" />
+				</div>
+				<br />
+				<div class="row">
+					<div class="offset-1 col-4 text-right">
+						max players(3-30):
+					</div>
+					<input id="maxPlayers" type="number" class="col-6" min="3" max="30" step="1" />
+				</div>
+				<br />
+				<div class="row">
+					<div class="offset-9 col-2">
+						<button type="button" data-create-button class="btn btn-dark">Create</button>
+					</div>
+				</div>
+
 			</div>
 		</div>
 		<div id="overlay">
@@ -69,7 +89,10 @@
 		</div>
 
 		<script src="~/js/signalr/dist/browser/signalr.js"></script>
+		<script src="~/js/chat.js"></script>
 		<script src="~/js/gameLobby.js"></script>
+		<script src="~/js/createRoom.js"></script>
+
 	}
 }
 

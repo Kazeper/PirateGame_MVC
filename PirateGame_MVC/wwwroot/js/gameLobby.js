@@ -1,4 +1,5 @@
-﻿var connection = new signalR.HubConnectionBuilder().withUrl("/Lobby/Index").build();
+﻿//var connection = new signalR.HubConnectionBuilder().withUrl("/Lobby/Index").build();
+
 const openCreateRoomButton = document.querySelectorAll('[data-modal-target]');
 const closeCreateRoomButton = document.querySelectorAll('[data-close-button]');
 const overlay = document.getElementById('overlay');
@@ -37,3 +38,16 @@ function closeCreateRoomModal(createRoomModal) {
 	createRoomModal.classList.remove('active');
 	overlay.classList.remove('active');
 };
+
+$("[type='number']").keypress(function (evt) {
+	evt.preventDefault();
+});
+
+connection.on("AddRoomToList", function (roomId, message) {
+	var roomSelect = document.getElementById('roomSelect');
+	var option = document.createElement('option');
+	option.value = roomId;
+	option.textContent = message;
+
+	roomSelect.appendChild(option);
+});

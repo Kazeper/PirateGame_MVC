@@ -24,6 +24,7 @@ namespace PirateGame_MVC.GameLobby
 
 		public void AddRoom(Room room)
 		{
+			Rooms.Add(room);
 		}
 	}
 }
