@@ -41,11 +41,54 @@ document.getElementById("sendButton").addEventListener("click", function (event)
 	connection.invoke("SendMessage", playerNickname, message).catch(function (err) {
 		return console.error(err.toString());
 	});
+	document.getElementById("messageInput").value = "";
 	event.preventDefault();
 });
 
+//popup modal
 const createRoom = document.querySelector('[data-create-button]');
+const openCreateRoomButton = document.querySelectorAll('[data-modal-target]');
+const closeCreateRoomButton = document.querySelectorAll('[data-close-button]');
+const overlay = document.getElementById('overlay');
 
+openCreateRoomButton.forEach(button => {
+	button.addEventListener('click', () => {
+		const createRoomModal = document.querySelector(button.dataset.modalTarget)
+		openCreateRoomModal(createRoomModal);
+	})
+});
+
+overlay.addEventListener('click', () => {
+	var modal = document.getElementById("create-room");
+	closeCreateRoomModal(modal);
+});
+
+closeCreateRoomButton.forEach(button => {
+	button.addEventListener('click', () => {
+		const createRoomModal = button.closest('.create-room');
+		closeCreateRoomModal(createRoomModal);
+	})
+});
+
+function openCreateRoomModal(createRoomModal) {
+	if (createRoomModal == null) return
+
+	createRoomModal.classList.add('active');
+	overlay.classList.add('active');
+};
+
+function closeCreateRoomModal(createRoomModal) {
+	if (createRoomModal == null) return
+
+	createRoomModal.classList.remove('active');
+	overlay.classList.remove('active');
+};
+
+$("[type='number']").keypress(function (evt) {
+	evt.preventDefault();
+});
+
+//creating room
 createRoom.addEventListener("click", function (event) {
 	var roomName = document.getElementById('roomName').value;
 	var maxPlayers = document.getElementById('maxPlayers').value;
@@ -54,9 +97,9 @@ createRoom.addEventListener("click", function (event) {
 	connection.invoke("CreateRoom", roomName, maxPlayers, playerNickname).catch(function (err) {
 		return console.error(err.toString());
 	});
-	event.preventDefault();
-	var modal = document.querySelector('.create-room.acitve');
+	var modal = document.getElementById("create-room");
 	closeCreateRoomModal(modal);
+	event.preventDefault();
 });
 
 connection.on("AddRoomToList", function (roomId, message) {
@@ -67,3 +110,32 @@ connection.on("AddRoomToList", function (roomId, message) {
 
 	roomSelect.appendChild(option);
 });
+
+function showAvailableRooms() {
+	connection.invoke("GetAvailableRooms").catch(function (err) {
+		return console.error(err.toString());
+	});
+
+	setTimeout("showAvailableRooms()", 5000);
+};
+
+connection.on("ReceiveRoomList", function (roomList) {
+	var rooms = JSON.parse(roomList);
+	var roomSelect = document.getElementById('roomSelect');
+	clearRoomSelect(roomSelect);
+
+	rooms.forEach(room => {
+		var option = document.createElement('option');
+		option.value = room.RoomId;
+		option.textContent = room.RoomName + "  Max players:" + room.MaxPlayers;
+		roomSelect.appendChild(option);
+	});
+});
+
+function clearRoomSelect(selectElement) {
+	var i, L = selectElement.options.length - 1;
+	for (i = L; i >= 0; i--) {
+		selectElement.remove(i);
+	}
+};
+showAvailableRooms();

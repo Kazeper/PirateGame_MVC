@@ -26,5 +26,19 @@ namespace PirateGame_MVC.GameLobby
 		{
 			Rooms.Add(room);
 		}
+
+		public List<Room> FindRooms(Predicate<Room> match)
+		{
+			List<Room> matchingRooms = new List<Room>();
+			foreach (Room room in Rooms)
+			{
+				if (match(room))
+				{
+					matchingRooms.Add(room);
+				}
+			}
+
+			return matchingRooms;
+		}
 	}
 }

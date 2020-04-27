@@ -47,8 +47,13 @@
 				</div>
 
 			</div>
+			<br />
 			<div class="row">
-				<button data-modal-target="#create-room">Create room</button>
+				<div class="col-md-6">
+					<button id="createRoom-btn" data-modal-target="#create-room">Create room</button>
+					<button id="joinRoom-btn" >Join room</button>
+				</div>
+
 			</div>
 
 			<br />
@@ -88,10 +93,13 @@
 
 		</div>
 
-		<script src="~/js/signalr/dist/browser/signalr.js"></script>
-		<script src="~/js/chat.js"></script>
-		<script src="~/js/gameLobby.js"></script>
-		<script src="~/js/createRoom.js"></script>
+		
+
+		@section Scripts
+		{
+			<script src="~/js/signalr/dist/browser/signalr.js"></script>
+			<script type="text/javascript" src="~/js/chat.js"></script>
+		}
 
 	}
 }

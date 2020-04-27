@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using PirateGame_MVC.Models.Validation;
+using Newtonsoft.Json;
 
 namespace PirateGame_MVC
 {
@@ -17,19 +18,26 @@ namespace PirateGame_MVC
 		[Nickname()]
 		public string Nickname { get; set; }
 
+		[JsonIgnore]
 		public string Ip { get; set; }
 
+		[JsonIgnore]
 		public string ConnectionId { get; set; }
 
 		public bool gameFieldIsSet;
 
+		[JsonIgnore]
 		public bool HasMirror { get; private set; }
+
 		public bool HasShield { get; private set; }
 
+		[JsonIgnore]
 		public int Bank { get; set; }
 
+		[JsonIgnore]
 		public int Wallet { get; set; }
 
+		[JsonIgnore]
 		[GameField()]
 		public int[] GameField { get; set; }
 

@@ -1,146 +1,153 @@
-#roomSelect
-{
-    background-color: #202020;
-    border:solid 2px #000000;
-    grid-area: roomSelect;
+#roomSelect {
+	background-color: #202020;
+	border: solid 2px #000000;
+	grid-area: roomSelect;
+	color: white;
 }
 
-#chat
-{
-    background-color: #202020;
-    height: 236px;
-    border:solid 2px #000000;
-    display: flex;
-    flex-direction: column-reverse;
-    overflow-y: scroll;
-}
-#chatMessage
-{
-    font-family: monospace;
-    color: ivory;
-
+#chat {
+	background-color: #202020;
+	height: 236px;
+	border: solid 2px #000000;
+	display: flex;
+	flex-direction: column-reverse;
+	overflow-y: scroll;
 }
 
-
+#chatMessage {
+	font-family: monospace;
+	color: ivory;
+}
 
 /*new */
 
 input {
-  font-size: 12px;
-  border: none;
-  border-radius: 5px;
-  width: 80%;
+	font-size: 12px;
+	border: none;
+	border-radius: 5px;
+	width: 80%;
 }
 
 hr {
-  margin: 5px auto;
-  width: 60%;
+	margin: 5px auto;
+	width: 60%;
 }
 
 .chat-bubble-left {
-  font-size: 12px;
-  padding: 10px 14px;
-  background: #606060;
-  margin: 10px 12px;
-  border-radius: 9px;
-  position: relative;
-  animation: fadeIn 0.5s ease-in;
+	font-size: 12px;
+	padding: 10px 14px;
+	background: #606060;
+	margin: 10px 12px;
+	border-radius: 9px;
+	position: relative;
+	animation: fadeIn 0.5s ease-in;
 }
 
 .chat-bubble-right {
-  font-size: 12px;
-  padding: 10px 14px;
-  background: #900090;
-  margin: 10px 12px;
-  border-radius: 9px;
-  position: relative;
-  animation: fadeIn 0.5s ease-in;
-  
+	font-size: 12px;
+	padding: 10px 14px;
+	background: #900090;
+	margin: 10px 12px;
+	border-radius: 9px;
+	position: relative;
+	animation: fadeIn 0.5s ease-in;
 }
 
 @keyframes fadeIn {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
 }
 
 .chat-box-tray {
-  background: inherit;
-  display: flex;
-  align-items: baseline;
-  padding: 10px 15px;
-  align-items: center;
-  margin-top: 12px;
-  bottom: 0;
+	background: inherit;
+	display: flex;
+	align-items: baseline;
+	padding: 10px 15px;
+	align-items: center;
+	margin-top: 12px;
+	bottom: 0;
 }
 
-button{
-    border: none;
-    background: inherit;
-    color: orange;
+button {
+	border: none;
+	background: inherit;
+	color: orange;
+}
+button#createRoom-btn{
+	border: 2px solid #303050;
+	border-radius: 5px;
+	background: inherit;
+	color: orange;
 }
 
-.create-room{
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0);
-  transition: 200ms ease-in-out;
-  border: 1px solid white;
-  border-radius: 10px;
-  z-index: 10;
-  background-color: #303050;
-  width: 500px;
-  max-width: 80%;
+button#joinRoom-btn{
+	border: 2px solid #303050;
+	border-radius: 5px;
+	background: inherit;
+	color: orange;
+	float: right;
 }
 
-.create-room.active{
-  transform: translate(-50%, -50%) scale(1);
-
+.create-room {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%) scale(0);
+	transition: 200ms ease-in-out;
+	border: 1px solid white;
+	border-radius: 10px;
+	z-index: 10;
+	background-color: #303050;
+	width: 500px;
+	max-width: 80%;
 }
 
-.create-room-header{
-  padding: 10px 15px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid white;
+	.create-room.active {
+		transform: translate(-50%, -50%) scale(1);
+	}
+
+.create-room-header {
+	padding: 10px 15px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border-bottom: 1px solid white;
 }
 
-.title{
-  font-weight: bold;
+.title {
+	font-weight: bold;
 }
 
-.close-button{
-  cursor:pointer;
-  border: none;
-  outline: none;
-  font-size: 1.25rem;
-  font-weight: bold;
+.close-button {
+	cursor: pointer;
+	border: none;
+	outline: none;
+	font-size: 1.25rem;
+	font-weight: bold;
 }
 
-.create-room-body{
-  padding: 10px 15px;
+.create-room-body {
+	padding: 10px 15px;
 }
 
-#overlay{
-  position: fixed;
-  opacity:0;
-  transition: 200ms ease-in-out;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-
-  background-color: rgba(0,0,0,0.5);
-  pointer-events: none;
+#overlay {
+	position: fixed;
+	opacity: 0;
+	transition: 200ms ease-in-out;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0,0,0,0.5);
+	pointer-events: none;
 }
 
-#overlay.active{
-  opacity: 1;
-  pointer-events: all;
-}
-
+	#overlay.active {
+		opacity: 1;
+		pointer-events: all;
+	}

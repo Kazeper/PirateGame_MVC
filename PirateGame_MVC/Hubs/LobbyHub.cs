@@ -31,5 +31,11 @@ namespace PirateGame_MVC.Hubs
 
 			await Clients.All.SendAsync("AddRoomToList", room.RoomId.ToString(), room.RoomName + " max players: " + room.MaxPlayers);
 		}
+
+		public async Task GetAvailableRooms()
+		{
+			string rooms = JsonConvert.SerializeObject(_gameLobby.FindRooms(x => x.Players.Count() < x.MaxPlayers));
+			await Clients.Caller.SendAsync("ReceiveRoomList", rooms);
+		}
 	}
 }
