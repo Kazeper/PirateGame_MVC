@@ -29,7 +29,8 @@ namespace PirateGame_MVC.Hubs
 			Room room = _gameLobby.CreateRoom(roomName, maxPlayers, ref player);
 			_gameLobby.AddRoom(room);
 
-			await Clients.All.SendAsync("AddRoomToList", room.RoomId.ToString(), room.RoomName + " max players: " + room.MaxPlayers);
+			await Clients.Caller.SendAsync("GetRoomId", room.RoomId);
+			await GetAvailableRooms();
 		}
 
 		public async Task GetAvailableRooms()

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PirateGame_MVC.GameLobby;
+using PirateGame_MVC.Models;
 
 namespace PirateGame_MVC.Controllers
 {
@@ -24,11 +25,24 @@ namespace PirateGame_MVC.Controllers
 			return View();
 		}
 
-		//private Player GetConnectedPlayer()
-		//{
-		//	string ip = _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
+		[HttpPost]
+		public IActionResult Index(RoomViewModel room)
+		{
+			TempData["roomId"] = room.RoomId;
 
-		//	return _gameLobby.Players.Find(m => m.Ip.Equals(ip));
-		//}
+			return RedirectToAction("Room");
+		}
+
+		public IActionResult Room()
+		{
+			if (TempData["roomId"] is null)
+			{
+				RedirectToAction("Index", "Home");
+			}
+			int id = int.Parse(TempData["roomId"].ToString());
+			Room room = _gameLobby.Rooms.FirstOrDefault(x => x.RoomId == id);
+
+			return View(room);
+		}
 	}
 }

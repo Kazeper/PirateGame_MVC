@@ -90,16 +90,30 @@ $("[type='number']").keypress(function (evt) {
 
 //creating room
 createRoom.addEventListener("click", function (event) {
-	var roomName = document.getElementById('roomName').value;
-	var maxPlayers = document.getElementById('maxPlayers').value;
-	if (true) {
-	}
-	connection.invoke("CreateRoom", roomName, maxPlayers, playerNickname).catch(function (err) {
+	var roomName = document.getElementById('roomName');
+	var maxPlayers = document.getElementById('maxPlayers');
+
+	connection.invoke("CreateRoom", roomName.value, maxPlayers.value, playerNickname).catch(function (err) {
 		return console.error(err.toString());
 	});
 	var modal = document.getElementById("create-room");
 	closeCreateRoomModal(modal);
+	roomName.value = "";
+	maxPlayers.value = "";
+
 	event.preventDefault();
+});
+
+connection.on("GetRoomId", function (roomId) {
+	var form = document.querySelector('form');
+	var roomIdInput = document.getElementById('roomIdInput');
+	//var newInput = document.createElement("input");
+	//newInput.value = roomId;
+	//newInput.setAttribute("name", "RoomId");
+	//form.appendChild(newInput);
+	roomIdInput.value = roomId;
+	console.log(roomId);
+	form.submit();
 });
 
 connection.on("AddRoomToList", function (roomId, message) {
@@ -127,7 +141,8 @@ connection.on("ReceiveRoomList", function (roomList) {
 	rooms.forEach(room => {
 		var option = document.createElement('option');
 		option.value = room.RoomId;
-		option.textContent = room.RoomName + "  Max players:" + room.MaxPlayers;
+		option.textContent = room.RoomName + " <---> players: " + room.Players.length + "/" + room.MaxPlayers;
+
 		roomSelect.appendChild(option);
 	});
 });
