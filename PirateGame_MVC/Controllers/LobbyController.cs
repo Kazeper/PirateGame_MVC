@@ -11,8 +11,8 @@ namespace PirateGame_MVC.Controllers
 {
 	public class LobbyController : Controller
 	{
-		private IHttpContextAccessor _accessor;
-		private Lobby _gameLobby;
+		private readonly IHttpContextAccessor _accessor;
+		private readonly Lobby _gameLobby;
 
 		public LobbyController(Lobby gameLobby, IHttpContextAccessor accessor)
 		{
@@ -26,9 +26,9 @@ namespace PirateGame_MVC.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult Index(RoomViewModel room)
+		public IActionResult Index(SelectedRoomViewModel selectedRoom)
 		{
-			TempData["roomId"] = room.RoomId;
+			TempData["roomId"] = selectedRoom.RoomId;
 
 			return RedirectToAction("Room");
 		}
@@ -40,9 +40,21 @@ namespace PirateGame_MVC.Controllers
 				RedirectToAction("Index", "Home");
 			}
 			int id = int.Parse(TempData["roomId"].ToString());
-			Room room = _gameLobby.Rooms.FirstOrDefault(x => x.RoomId == id);
 
-			return View(room);
+			return View(GetSelectedRoomViewModel(id));
+		}
+
+		private SelectedRoomViewModel GetSelectedRoomViewModel(int id)
+		{
+			SelectedRoomViewModel selectedRoom = new SelectedRoomViewModel();
+
+			selectedRoom.RoomId = id;
+			selectedRoom.Room = _gameLobby.Rooms.FirstOrDefault(x => x.RoomId == id);
+
+			string playerNickname = HttpContext.Session.GetString("playerNickname");
+			selectedRoom.Player = _gameLobby.Players.FirstOrDefault(p => p.Nickname.Equals(playerNickname));
+
+			return selectedRoom;
 		}
 	}
 }

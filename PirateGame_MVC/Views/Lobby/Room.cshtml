@@ -1,8 +1,9 @@
 ﻿@using PirateGame_MVC.GameLobby;
-@model Room
+@model SelectedRoomViewModel
 @{
     ViewData["Title"] = "Room";
 }
 
-<h1>Room : @Model.RoomName</h1>
+<h1>Room : @Model.Room.RoomName</h1>
 
+<h1>player: @Model.Player.Nickname</h1>
