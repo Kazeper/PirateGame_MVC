@@ -1,9 +1,68 @@
-﻿@using PirateGame_MVC.GameLobby;
+﻿@using Microsoft.AspNetCore.Http;
 @model SelectedRoomViewModel
 @{
-    ViewData["Title"] = "Room";
+	ViewData["Title"] = "Room";
 }
+<script type="text/javascript">
+          var playerNickname = '@Context.Session.GetString("playerNickname")';
+</script>
 
 <h1>Room : @Model.Room.RoomName</h1>
 
 <h1>player: @Model.Player.Nickname</h1>
+<br />
+<br />
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-6">
+			@{
+				int index = 0;
+				string imgPath;
+
+				for (int i = 0; i < GameSettings.NumberOfRows; i++)
+				{
+					<div class="row no-gutters">
+
+						@for (int j = 0; j < GameSettings.NumberOfColumns; j++)
+						{
+							<div id="@i _@j" class="col">
+
+								@{
+									imgPath = @Model.Player.GameField[index].ToString() + ".png";
+								}
+								<div id="_@index" class="img-fluid">
+									<input asp-for="@Model.Player.GameField[index]" value="@Model.Player.GameField[index]" type="hidden" />
+									<img id="@i -@j" class="img-fluid" src="~/resources/@imgPath" alt="" draggable="true" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)" />
+								</div>
+
+							</div>
+							index++;
+						}
+
+					</div>
+				}
+			}
+		</div>
+		<div id="chat" class="col-md-6">
+			<div class="row">
+				<div class="col-12">
+					<div class="chat-box-tray">
+						<input id="messageInput" type="text" placeholder=" Type your message here...">
+						<div class=""></div>
+						<button id="sendButton" class="offset-1 material-icons" type="button">send</button>
+					</div>
+				</div>
+			</div>
+			<div class="chat-panel">
+			</div>
+		</div>
+	</div>
+</div>
+
+@section Scripts
+{
+	<script src="~/js/setGameField.js"></script>
+	<script src="~/js/signalr/dist/browser/signalr.js"></script>
+	<script type="text/javascript" src="~/js/chat.js"></script>
+}

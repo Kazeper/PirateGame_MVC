@@ -46,13 +46,14 @@ namespace PirateGame_MVC.Controllers
 
 		private SelectedRoomViewModel GetSelectedRoomViewModel(int id)
 		{
-			SelectedRoomViewModel selectedRoom = new SelectedRoomViewModel();
-
-			selectedRoom.RoomId = id;
-			selectedRoom.Room = _gameLobby.Rooms.FirstOrDefault(x => x.RoomId == id);
-
 			string playerNickname = HttpContext.Session.GetString("playerNickname");
-			selectedRoom.Player = _gameLobby.Players.FirstOrDefault(p => p.Nickname.Equals(playerNickname));
+
+			SelectedRoomViewModel selectedRoom = new SelectedRoomViewModel
+			{
+				RoomId = id,
+				Room = _gameLobby.Rooms.FirstOrDefault(x => x.RoomId == id),
+				Player = _gameLobby.Players.FirstOrDefault(p => p.Nickname.Equals(playerNickname))
+			};
 
 			return selectedRoom;
 		}
