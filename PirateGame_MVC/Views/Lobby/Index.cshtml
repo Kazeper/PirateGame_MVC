@@ -30,33 +30,16 @@
 					<input id="roomIdInput" asp-for="RoomId" type="hidden"/>
 				</form>
 				<div id="room" class="col-md-6">
-					<select id="roomSelect" class="col-md 6" name="rooms" size="10">
+					<select id="roomSelect" class="col-md" name="rooms" size="10">
 					</select>
 				</div>
-
-				<div id="chat" class="col-md-6">
-
-					<div class="row">
-						<div class="col-12">
-							<div class="chat-box-tray">
-								<input id="messageInput" type="text" placeholder=" Type your message here...">
-								<div class=""></div>
-								<button id="sendButton" class="offset-1 material-icons" type="button">send</button>
-							</div>
-						</div>
-					</div>
-					<div class="chat-panel">
-
-					</div>
-
-				</div>
-
+				<partial name="_ChatPartial" />
 			</div>
 			<br />
 			<div class="row">
 				<div class="col-md-6">
 					<button id="createRoom-btn" data-modal-target="#create-room">Create room</button>
-					<button id="joinRoom-btn" formaction="Index">Join room</button>
+					<button id="joinRoom-btn" disabled>Join room</button>
 				</div>
 
 			</div>

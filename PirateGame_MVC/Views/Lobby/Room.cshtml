@@ -7,26 +7,37 @@
           var playerNickname = '@Context.Session.GetString("playerNickname")';
 </script>
 
-<h1>Room : @Model.Room.RoomName</h1>
+<h6>Room : @Model.Room.RoomName</h6>
 
-<h1>player: @Model.Player.Nickname</h1>
 <br />
 <br />
 
 <div class="container">
 	<div class="row">
-		<div class="col-md-6">
+		<div class="col-md-2">
+			<div class="row">
+				<h4>Players</h4>
+			</div>
+			<div class="row" id="listOfPlayers">
+				@foreach (Player player in Model.Room.Players)
+				{
+					<div class="col-1">@player.Nickname</div>
+				}
+			</div>
+		</div>
+		<div class="col-md-4 border border-warning mx-0 px-0">
+			<span>drag&drop elements to set your gamefield</span>
 			@{
 				int index = 0;
 				string imgPath;
 
 				for (int i = 0; i < GameSettings.NumberOfRows; i++)
 				{
-					<div class="row no-gutters">
+					<div class="row no-gutters justify-content-center mx-0 px-0">
 
 						@for (int j = 0; j < GameSettings.NumberOfColumns; j++)
 						{
-							<div id="@i _@j" class="col">
+							<div id="@i _@j">
 
 								@{
 									imgPath = @Model.Player.GameField[index].ToString() + ".png";
@@ -44,19 +55,7 @@
 				}
 			}
 		</div>
-		<div id="chat" class="col-md-6">
-			<div class="row">
-				<div class="col-12">
-					<div class="chat-box-tray">
-						<input id="messageInput" type="text" placeholder=" Type your message here...">
-						<div class=""></div>
-						<button id="sendButton" class="offset-1 material-icons" type="button">send</button>
-					</div>
-				</div>
-			</div>
-			<div class="chat-panel">
-			</div>
-		</div>
+		<partial name="_ChatPartial" />
 	</div>
 </div>
 
@@ -64,5 +63,6 @@
 {
 	<script src="~/js/setGameField.js"></script>
 	<script src="~/js/signalr/dist/browser/signalr.js"></script>
-	<script type="text/javascript" src="~/js/chat.js"></script>
+	<script src="~/js/chat.js"></script>
+	<script src="~/js/room.js"></script>
 }

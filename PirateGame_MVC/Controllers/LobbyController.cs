@@ -35,9 +35,9 @@ namespace PirateGame_MVC.Controllers
 
 		public IActionResult Room()
 		{
-			if (TempData["roomId"] is null)
+			if (TempData["roomId"] == null)
 			{
-				RedirectToAction("Index", "Home");
+				return RedirectToAction("Index", "Home");
 			}
 			int id = int.Parse(TempData["roomId"].ToString());
 

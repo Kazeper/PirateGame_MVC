@@ -40,5 +40,10 @@ namespace PirateGame_MVC.GameLobby
 
 			return matchingRooms;
 		}
+
+		public Player GetPlayer(string playerNickname)
+		{
+			return Players.Find(p => p.Nickname.Equals(playerNickname));
+		}
 	}
 }

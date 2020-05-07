@@ -23,6 +23,15 @@ namespace PirateGame_MVC.Hubs
 			await Clients.All.SendAsync("ReceiveMessage", user, message);
 		}
 
+		public async Task JoinRoom(int roomId, string playerNickname)
+		{
+			var room = _gameLobby.Rooms.FirstOrDefault(r => r.RoomId == roomId);
+			room.AddPlayer(_gameLobby.GetPlayer(playerNickname));
+			string players = JsonConvert.SerializeObject(room.Players);
+
+			await Clients.Caller.SendAsync("GetPlayers", players);
+		}
+
 		public async Task CreateRoom(string roomName, int maxPlayers, string playerNickname)
 		{
 			Player player = _gameLobby.Players.Find(x => x.Nickname == playerNickname);

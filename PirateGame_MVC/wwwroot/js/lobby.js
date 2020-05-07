@@ -1,4 +1,8 @@
 const createRoom = document.querySelector('[data-create-button]');
+const joinRoom = document.getElementById('joinRoom-btn');
+const form = document.querySelector('form');
+const roomIdInput = document.getElementById('roomIdInput');
+const select = document.getElementById('roomSelect');
 
 createRoom.addEventListener("click", function (event) {
 	var roomName = document.getElementById('roomName');
@@ -15,13 +19,18 @@ createRoom.addEventListener("click", function (event) {
 	event.preventDefault();
 });
 
+joinRoom.addEventListener("click", function (event) {
+	if (select.value == "") roomIdInput.value = select.options[0].value;
+	else roomIdInput.value = select.value;
+	connection.invoke("JoinRoom", roomIdInput.value, playerNickname).catch(function (err) {
+		return console.error(err.toString());
+	});
+
+	event.preventDefault();
+	form.submit();
+});
+
 connection.on("GetRoomId", function (roomId) {
-	var form = document.querySelector('form');
-	var roomIdInput = document.getElementById('roomIdInput');
-	//var newInput = document.createElement("input");
-	//newInput.value = roomId;
-	//newInput.setAttribute("name", "RoomId");
-	//form.appendChild(newInput);
 	roomIdInput.value = roomId;
 	console.log(roomId);
 	form.submit();

@@ -24,5 +24,10 @@ namespace PirateGame_MVC.GameLobby
 				creator
 			};
 		}
+
+		public void AddPlayer(Player player)
+		{
+			Players.Add(player);
+		}
 	}
 }
