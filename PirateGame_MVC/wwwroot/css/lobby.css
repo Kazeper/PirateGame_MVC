@@ -91,34 +91,24 @@ button {
 }
 
 	button#createRoom-btn {
-		font-size: 12px;
-		border: 2px solid #303050;
-		border-radius: 5px;
-		background: inherit;
-		color: orange;
-		padding: 5px 15px;
-		margin-left: 5px;
-	}
-
-	button#joinRoom-btn:hover {
-		background-color: #808080;
-		color: lightcoral;
-	}
-
-	button#createRoom-btn:hover {
-		background-color: #808080;
-		color: lightcoral;
 	}
 
 	button#joinRoom-btn {
-		font-size: 12px;
-		border: 2px solid #303050;
-		border-radius: 5px;
-		background: inherit;
-		color: orange;
 		float: right;
-		padding: 5px 15px;
-		margin-right: 5px;
+	}
+
+.btn-positive {
+	font-size: 12px;
+	border: 2px solid #303050;
+	border-radius: 5px;
+	color: orange;
+	padding: 5px 15px;
+	margin-right: 5px;
+}
+
+	.btn-positive:hover {
+		background-color: #808080;
+		color: lightcoral;
 	}
 
 .create-room {
@@ -179,3 +169,25 @@ button {
 		opacity: 1;
 		pointer-events: all;
 	}
+
+.ready-box {
+	height: 20px;
+	width: 20px;
+	font-size: 18px;
+	text-align: center;
+	line-height: 20px;
+	border: 2px solid #900090;
+	font-weight: 900;
+	float: left;
+	background-color: red;
+	margin: 5px 5px;
+}
+
+.ready-box-changed {
+	background-color: green;
+	color: darkgoldenrod;
+}
+
+.player-ready-changed {
+	text-shadow: 2px 2px green;
+}

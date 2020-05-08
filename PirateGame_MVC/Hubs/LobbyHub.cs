@@ -27,6 +27,13 @@ namespace PirateGame_MVC.Hubs
 		{
 			var room = _gameLobby.Rooms.FirstOrDefault(r => r.RoomId == roomId);
 			room.AddPlayer(_gameLobby.GetPlayer(playerNickname));
+
+			await GetParticipants(roomId);
+		}
+
+		public async Task GetParticipants(int roomId)
+		{
+			var room = _gameLobby.Rooms.FirstOrDefault(r => r.RoomId == roomId);
 			string players = JsonConvert.SerializeObject(room.Players);
 
 			await Clients.Caller.SendAsync("GetPlayers", players);
