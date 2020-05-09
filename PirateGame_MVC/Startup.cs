@@ -60,15 +60,15 @@ namespace PirateGame_MVC
 				app.UseHsts();
 			}
 
+			app.UseSession();
 			app.UseSignalR(route =>
 			{
-				route.MapHub<LobbyHub>("/Lobby/index");
+				route.MapHub<LobbyHub>("/Lobby/Index");
 			});
 
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
 			app.UseCookiePolicy();
-			app.UseSession();
 
 			app.UseMvc(routes =>
 			{

@@ -25,8 +25,11 @@ namespace PirateGame_MVC.Hubs
 
 		public async Task JoinRoom(int roomId, string playerNickname)
 		{
+			var player = _gameLobby.GetPlayer(playerNickname);
 			var room = _gameLobby.Rooms.FirstOrDefault(r => r.RoomId == roomId);
-			room.AddPlayer(_gameLobby.GetPlayer(playerNickname));
+
+			room.AddPlayer(player);
+			player.IsInRoom = true;
 
 			await GetParticipants(roomId);
 		}
@@ -39,11 +42,23 @@ namespace PirateGame_MVC.Hubs
 			await Clients.Caller.SendAsync("GetPlayers", players);
 		}
 
+		public string GetAllParticipants()
+		{
+			return JsonConvert.SerializeObject(_gameLobby.Players);
+		}
+
+		public void LeaveRoom(string playerNickname)
+		{
+			_gameLobby.LeaveRoom(_gameLobby.GetPlayer(playerNickname));
+		}
+
 		public async Task CreateRoom(string roomName, int maxPlayers, string playerNickname)
 		{
-			Player player = _gameLobby.Players.Find(x => x.Nickname == playerNickname);
+			Player player = _gameLobby.GetPlayer(playerNickname);
 			Room room = _gameLobby.CreateRoom(roomName, maxPlayers, ref player);
+
 			_gameLobby.AddRoom(room);
+			player.IsInRoom = true;
 
 			await Clients.Caller.SendAsync("GetRoomId", room.RoomId);
 			await GetAvailableRooms();

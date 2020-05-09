@@ -19,7 +19,7 @@ namespace PirateGame_MVC.GameLobby
 
 		public Room CreateRoom(string roomName, int maxPlayers, ref Player creator)
 		{
-			return new Room(roomName, maxPlayers, ref creator, Rooms.Count + 1);
+			return new Room(roomName, maxPlayers, ref creator, Rooms.Max(r => r.RoomId) + 1);
 		}
 
 		public void AddRoom(Room room)
@@ -44,6 +44,27 @@ namespace PirateGame_MVC.GameLobby
 		public Player GetPlayer(string playerNickname)
 		{
 			return Players.Find(p => p.Nickname.Equals(playerNickname));
+		}
+
+		public void LeaveRoom(Player player)
+		{
+			Room room = Rooms.Find(r => r.Players.Exists(p => p.Nickname.Equals(player.Nickname)));
+
+			if (room != null)
+			{
+				room.Players.Remove(player);
+				player.IsInRoom = false;
+
+				if (room.Players.Count == 0)
+				{
+					RemoveRoom(room);
+				}
+			}
+		}
+
+		private void RemoveRoom(Room room)
+		{
+			Rooms.Remove(room);
 		}
 	}
 }

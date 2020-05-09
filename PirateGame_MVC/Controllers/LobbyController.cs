@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using PirateGame_MVC.GameLobby;
+using PirateGame_MVC.Hubs;
 using PirateGame_MVC.Models;
 
 namespace PirateGame_MVC.Controllers
@@ -13,15 +15,24 @@ namespace PirateGame_MVC.Controllers
 	{
 		private readonly IHttpContextAccessor _accessor;
 		private readonly Lobby _gameLobby;
+		private string _playerNickname;
 
 		public LobbyController(Lobby gameLobby, IHttpContextAccessor accessor)
 		{
 			_accessor = accessor;
 			_gameLobby = gameLobby;
+
+			_playerNickname = _accessor.HttpContext.Session.GetString("playerNickname");
 		}
 
 		public IActionResult Index()
 		{
+			Player player = _gameLobby.GetPlayer(_playerNickname);
+			if (player.IsInRoom)
+			{
+				_gameLobby.LeaveRoom(player);
+			}
+
 			return View();
 		}
 
@@ -37,8 +48,12 @@ namespace PirateGame_MVC.Controllers
 		{
 			if (TempData["roomId"] == null)
 			{
-				return RedirectToAction("Index", "Home");
+				var room = _gameLobby.Rooms.Find(r => r.Players.Exists(p => p.Nickname.Equals(_playerNickname)));
+
+				if (room == null) return RedirectToAction("Index");
+				else return View(GetSelectedRoomViewModel(room.RoomId));
 			}
+
 			int id = int.Parse(TempData["roomId"].ToString());
 
 			return View(GetSelectedRoomViewModel(id));
@@ -46,13 +61,11 @@ namespace PirateGame_MVC.Controllers
 
 		private SelectedRoomViewModel GetSelectedRoomViewModel(int id)
 		{
-			string playerNickname = HttpContext.Session.GetString("playerNickname");
-
 			SelectedRoomViewModel selectedRoom = new SelectedRoomViewModel
 			{
 				RoomId = id,
 				Room = _gameLobby.Rooms.FirstOrDefault(x => x.RoomId == id),
-				Player = _gameLobby.Players.FirstOrDefault(p => p.Nickname.Equals(playerNickname))
+				Player = _gameLobby.Players.FirstOrDefault(p => p.Nickname.Equals(_playerNickname))
 			};
 
 			return selectedRoom;

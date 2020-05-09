@@ -19,16 +19,20 @@ namespace PirateGame_MVC
 		public string Nickname { get; set; }
 
 		[JsonIgnore]
+		public bool IsInRoom { get; set; }
+
+		[JsonIgnore]
 		public string Ip { get; set; }
 
 		[JsonIgnore]
 		public string ConnectionId { get; set; }
 
-		public bool gameFieldIsSet;
+		public bool GameFieldIsSet { get; set; }
 
 		[JsonIgnore]
 		public bool HasMirror { get; private set; }
 
+		[JsonIgnore]
 		public bool HasShield { get; private set; }
 
 		[JsonIgnore]
@@ -76,7 +80,7 @@ namespace PirateGame_MVC
 		public void SetGameField(int[] gameField)
 		{
 			this.GameField = gameField;
-			gameFieldIsSet = true;
+			GameFieldIsSet = true;
 		}
 
 		public void SetGameFieldRandomly(int? seed)
@@ -124,7 +128,7 @@ namespace PirateGame_MVC
 				}
 			}
 
-			gameFieldIsSet = true;
+			GameFieldIsSet = true;
 		}
 
 		public void ExecuteAction(int drawField)
