@@ -15,7 +15,7 @@ namespace PirateGame_MVC.Controllers
 	{
 		private readonly IHttpContextAccessor _accessor;
 		private readonly Lobby _gameLobby;
-		private string _playerNickname;
+		private readonly string _playerNickname;
 
 		public LobbyController(Lobby gameLobby, IHttpContextAccessor accessor)
 		{
