@@ -64,6 +64,7 @@ namespace PirateGame_MVC
 			app.UseSignalR(route =>
 			{
 				route.MapHub<LobbyHub>("/Lobby/Index");
+				route.MapHub<RoomHub>("/Room");
 			});
 
 			app.UseHttpsRedirection();

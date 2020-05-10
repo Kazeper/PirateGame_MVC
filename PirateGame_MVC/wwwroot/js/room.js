@@ -22,8 +22,6 @@ readyButton.addEventListener("click", function (event) {
 	}
 });
 
-connection.server;
-
 connection.on("GetPlayers", function (serializedPlayers) {
 	var players = JSON.parse(serializedPlayers);
 
@@ -40,3 +38,24 @@ connection.on("GetPlayers", function (serializedPlayers) {
 		listOfPlayers.appendChild(div);
 	})
 })
+
+connection.on("ReceivePlayers", function (serializedPlayers) {
+	var players = JSON.parse(serializedPlayers);
+
+	players.forEach(player => {
+		var div = document.createElement("div");
+		div.setAttribute("class", "col text-justify");
+		div.setAttribute("id", player.Nickname);
+		div.textContent = player.Nickname;
+
+		var readyBox = document.createElement("div");
+		readyBox.setAttribute("class", "ready-box");
+
+		listOfPlayers.appendChild(readyBox);
+		listOfPlayers.appendChild(div);
+	})
+});
+
+connection.invoke("GetPlayers", roomId).catch(function (err) {
+	return console.error(err.toString());
+});

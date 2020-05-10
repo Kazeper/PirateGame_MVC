@@ -34,7 +34,7 @@ namespace PirateGame_MVC.Hubs
 			await GetParticipants(roomId);
 		}
 
-		public async Task GetParticipants(int roomId)
+		public async Task GetParticipants(int roomId)//TODO move to abstract class
 		{
 			var room = _gameLobby.Rooms.FirstOrDefault(r => r.RoomId == roomId);
 			string players = JsonConvert.SerializeObject(room.Players);

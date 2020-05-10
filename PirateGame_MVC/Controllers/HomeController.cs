@@ -47,8 +47,6 @@ namespace PirateGame_MVC.Controllers
 				_gameLobby.Players.Add(player);
 				HttpContext.Session.SetString("playerNickname", player.Nickname);
 
-				TempData["playerNickname"] = player.Nickname;
-
 				return RedirectToAction("Index", "Lobby");
 			}
 			else return View(player);

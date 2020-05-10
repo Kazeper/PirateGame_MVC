@@ -27,6 +27,11 @@ namespace PirateGame_MVC.Controllers
 
 		public IActionResult Index()
 		{
+			if (String.IsNullOrEmpty(_playerNickname))
+			{
+				return RedirectToAction("Index", "Home");
+			}
+
 			Player player = _gameLobby.GetPlayer(_playerNickname);
 			if (player.IsInRoom)
 			{
@@ -55,6 +60,7 @@ namespace PirateGame_MVC.Controllers
 			}
 
 			int id = int.Parse(TempData["roomId"].ToString());
+			TempData.Remove("roomId");
 
 			return View(GetSelectedRoomViewModel(id));
 		}

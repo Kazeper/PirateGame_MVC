@@ -4,7 +4,8 @@
 	ViewData["Title"] = "Room";
 }
 <script type="text/javascript">
-          var playerNickname = '@Context.Session.GetString("playerNickname")';
+	var playerNickname = '@Context.Session.GetString("playerNickname")';
+	var roomId = @Model.RoomId;
 </script>
 
 <h6>Room : @Model.Room.RoomName</h6>
@@ -61,7 +62,7 @@
 	<br />
 	<div class="row">
 		<div class="offset-2" col-md-2>
-			<button class="btn-positive" id="ready-btn">Feed ME!</button>
+			<button class="btn-positive" id="ready-btn">Ready!</button>
 		</div>
 	</div>
 </div>
@@ -70,6 +71,6 @@
 {
 	<script src="~/js/setGameField.js"></script>
 	<script src="~/js/signalr/dist/browser/signalr.js"></script>
-	<script src="~/js/chat.js"></script>
+	<script src="~/js/roomChat.js"></script>
 	<script src="~/js/room.js"></script>
 }
