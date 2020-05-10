@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json;
 using PirateGame_MVC.GameLobby;
 using System.Linq;
@@ -30,7 +31,7 @@ namespace PirateGame_MVC
 			var room = _gameLobby.Rooms.FirstOrDefault(r => r.RoomId == roomId);
 			string players = JsonConvert.SerializeObject(room.Players);
 
-			await Clients.Caller.SendAsync("ReceivePlayers", players);
+			await Clients.Group(roomId.ToString()).SendAsync("ReceivePlayers", players);
 		}
 	}
 }

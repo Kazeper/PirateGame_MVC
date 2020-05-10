@@ -73,4 +73,3 @@ function clearRoomSelect(selectElement) {
 		selectElement.remove(i);
 	}
 };
-showAvailableRooms();

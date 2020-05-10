@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using PirateGame_MVC.GameLobby;
+using Microsoft.AspNetCore.Mvc;
 
 namespace PirateGame_MVC.Hubs
 {
@@ -23,28 +24,13 @@ namespace PirateGame_MVC.Hubs
 			await Clients.All.SendAsync("ReceiveMessage", user, message);
 		}
 
-		public async Task JoinRoom(int roomId, string playerNickname)
+		public void JoinRoom(int roomId, string playerNickname)
 		{
 			var player = _gameLobby.GetPlayer(playerNickname);
 			var room = _gameLobby.Rooms.FirstOrDefault(r => r.RoomId == roomId);
 
 			room.AddPlayer(player);
 			player.IsInRoom = true;
-
-			await GetParticipants(roomId);
-		}
-
-		public async Task GetParticipants(int roomId)//TODO move to abstract class
-		{
-			var room = _gameLobby.Rooms.FirstOrDefault(r => r.RoomId == roomId);
-			string players = JsonConvert.SerializeObject(room.Players);
-
-			await Clients.Caller.SendAsync("GetPlayers", players);
-		}
-
-		public string GetAllParticipants()
-		{
-			return JsonConvert.SerializeObject(_gameLobby.Players);
 		}
 
 		public void LeaveRoom(string playerNickname)
