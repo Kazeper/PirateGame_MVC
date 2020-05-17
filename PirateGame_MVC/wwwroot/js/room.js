@@ -4,21 +4,21 @@ var readyButton = document.getElementById('ready-btn');
 var playerIsReady = false;
 
 readyButton.addEventListener("click", function (event) {
-	const playerDiv = document.getElementById(playerNickname);
+	var readyBox = document.querySelector('#' + playerNickname + '.col .ready-box');
 
 	playerIsReady = !playerIsReady;
 
 	if (playerIsReady) {
-		playerDiv.classList.add('player-ready-changed');
-		playerDiv.nextElementSibling.classList.add('ready-box-changed');
-		playerDiv.nextElementSibling.innerHTML = '&radic;';
+		readyBox.classList.add('ready-box-changed');
+		readyBox.innerHTML = '&radic;';
 
 		readyButton.classList.add('ready-box-changed');
+
+		connection.invoke("UpdatePlayerState")
 	}
 	else {
-		playerDiv.classList.remove('player-ready-changed');
-		playerDiv.nextElementSibling.classList.remove('ready-box-changed');
-		playerDiv.nextElementSibling.innerHTML = '';
+		readyBox.classList.remove('ready-box-changed');
+		readyBox.innerHTML = '';
 		readyButton.classList.remove('ready-box-changed');
 	}
 	event.preventDefault();
@@ -31,16 +31,25 @@ connection.on("ReceivePlayers", function (serializedPlayers) {
 	clearListOfPlayers();
 
 	players.forEach(player => {
-		var div = document.createElement("div");
-		div.setAttribute("class", "col text-justify");
-		div.setAttribute("id", player.Nickname);
-		div.textContent = player.Nickname;
+		var divCol = document.createElement("div");
+		divCol.setAttribute("class", "col");
+		divCol.setAttribute("id", player.Nickname);
 
 		var readyBox = document.createElement("div");
 		readyBox.setAttribute("class", "ready-box");
 
-		listOfPlayers.appendChild(readyBox);
-		listOfPlayers.appendChild(div);
+		var textDiv = document.createElement("div");
+		textDiv.setAttribute("class", "text-justify");
+		textDiv.textContent = player.Nickname;
+
+		var divW100 = document.createElement("div");
+		divW100.setAttribute("class", "w-100");
+
+		divCol.appendChild(readyBox);
+		divCol.appendChild(textDiv);
+
+		listOfPlayers.appendChild(divCol);
+		listOfPlayers.appendChild(divW100);
 	})
 });
 

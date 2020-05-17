@@ -16,14 +16,18 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-2">
-			<div class="row">
-				<h4 class="justify-content-center">Players</h4>
+			<div class="row justify-content-center">
+				<h4 class="">Players</h4>
 			</div>
 			<div class="row" id="listOfPlayers">
 				@foreach (Player player in Model.Room.Players)
 				{
-					<div class="col text-justify" id="@player.Nickname">@player.Nickname</div>
-					<div class="ready-box"></div>
+					<div class="col" id="@player.Nickname">
+						<div class="ready-box"></div>
+						<div class="text-justify">@player.Nickname</div>						
+					</div>
+					<div class="w-100"></div>
+					
 				}
 			</div>
 		</div>

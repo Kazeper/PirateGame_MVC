@@ -128,7 +128,7 @@ namespace PirateGame_MVC
 				}
 			}
 
-			GameFieldIsSet = true;
+			//GameFieldIsSet = true;
 		}
 
 		public void ExecuteAction(int drawField)
