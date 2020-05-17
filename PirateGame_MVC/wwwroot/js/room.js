@@ -1,4 +1,5 @@
-﻿var listOfPlayers = document.getElementById('listOfPlayers');
+﻿"use strict";
+var listOfPlayers = document.getElementById('listOfPlayers');
 var readyButton = document.getElementById('ready-btn');
 var playerIsReady = false;
 
@@ -25,6 +26,9 @@ readyButton.addEventListener("click", function (event) {
 
 connection.on("ReceivePlayers", function (serializedPlayers) {
 	var players = JSON.parse(serializedPlayers);
+	console.log(serializedPlayers);
+
+	clearListOfPlayers();
 
 	players.forEach(player => {
 		var div = document.createElement("div");
@@ -39,3 +43,7 @@ connection.on("ReceivePlayers", function (serializedPlayers) {
 		listOfPlayers.appendChild(div);
 	})
 });
+
+function clearListOfPlayers() {
+	listOfPlayers.innerHTML = "";
+}

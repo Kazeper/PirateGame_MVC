@@ -6,7 +6,6 @@ document.getElementById("sendButton").disabled = true;
 
 connection.start().then(function () {
 	connection.invoke("AddToGroup", roomId);
-	connection.invoke("GetPlayers", roomId);
 	document.getElementById("sendButton").disabled = false;
 }).catch(function (err) {
 	return console.error(err.toString());

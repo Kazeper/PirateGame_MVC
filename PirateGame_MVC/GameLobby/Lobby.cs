@@ -17,9 +17,11 @@ namespace PirateGame_MVC.GameLobby
 			Rooms = new List<Room>();
 		}
 
-		public Room CreateRoom(string roomName, int maxPlayers, ref Player creator)
+		public bool CreateRoom(string roomName, int maxPlayers, ref Player creator)
 		{
+			//TODO do it better!
 			int id;
+
 			if (Rooms.Count == 0)
 			{
 				id = 1;
@@ -28,7 +30,15 @@ namespace PirateGame_MVC.GameLobby
 			{
 				id = Rooms.Max(x => x.RoomId) + 1;
 			}
-			return new Room(roomName, maxPlayers, ref creator, id);
+
+			Room room = new Room(roomName, maxPlayers, ref creator, id);
+
+			if (room != null)
+			{
+				AddRoom(room);
+				return true;
+			}
+			else return false;
 		}
 
 		public void AddRoom(Room room)

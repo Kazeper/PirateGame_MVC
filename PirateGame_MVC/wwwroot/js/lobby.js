@@ -1,5 +1,7 @@
+"use strict";
 const createRoom = document.querySelector('[data-create-button]');
 const joinRoom = document.getElementById('joinRoom-btn');
+console.log(joinRoom);
 const form = document.querySelector('form');
 const roomIdInput = document.getElementById('roomIdInput');
 const select = document.getElementById('roomSelect');
@@ -22,36 +24,26 @@ createRoom.addEventListener("click", function (event) {
 joinRoom.addEventListener("click", function (event) {
 	if (select.value == "") roomIdInput.value = select.options[0].value;
 	else roomIdInput.value = select.value;
+
 	connection.invoke("JoinRoom", roomIdInput.value, playerNickname).catch(function (err) {
 		return console.error(err.toString());
 	});
 
 	event.preventDefault();
-	form.submit();
+	alert("loading...");
+	setTimeout(acceptForm, 2000);
 });
 
-connection.on("GetRoomId", function (roomId) {
+function acceptForm() {
+	alert("loading...");
+	form.submit();
+}
+
+connection.on("GoToCreatedRoom", function (roomId) {
 	roomIdInput.value = roomId;
 	console.log(roomId);
 	form.submit();
 });
-
-connection.on("AddRoomToList", function (roomId, message) {
-	var roomSelect = document.getElementById('roomSelect');
-	var option = document.createElement('option');
-	option.value = roomId;
-	option.textContent = message;
-
-	roomSelect.appendChild(option);
-});
-
-function showAvailableRooms() {
-	connection.invoke("GetAvailableRooms").catch(function (err) {
-		return console.error(err.toString());
-	});
-
-	setTimeout("showAvailableRooms()", 5000);
-};
 
 connection.on("ReceiveRoomList", function (roomList) {
 	var rooms = JSON.parse(roomList);
