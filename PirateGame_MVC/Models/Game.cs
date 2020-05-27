@@ -18,7 +18,7 @@ namespace PirateGame_MVC.Models
 
 		public Game(List<Player> players)
 		{
-			this.Players = players;
+			Players = players;
 
 			CreatePlayerQueue();
 			FillPlayerQueue();

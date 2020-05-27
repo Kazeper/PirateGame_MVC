@@ -15,13 +15,14 @@ namespace PirateGame_MVC.Controllers
 	{
 		private readonly IHttpContextAccessor _accessor;
 		private readonly Lobby _gameLobby;
+		private readonly IHubContext<RoomHub> _roomHub;
 		private readonly string _playerNickname;
 
-		public LobbyController(Lobby gameLobby, IHttpContextAccessor accessor)
+		public LobbyController(Lobby gameLobby, IHttpContextAccessor accessor, IHubContext<RoomHub> roomHub)
 		{
 			_accessor = accessor;
 			_gameLobby = gameLobby;
-
+			_roomHub = roomHub;
 			_playerNickname = _accessor.HttpContext.Session.GetString("playerNickname");
 		}
 
@@ -56,25 +57,45 @@ namespace PirateGame_MVC.Controllers
 				var room = _gameLobby.Rooms.Find(r => r.Players.Exists(p => p.Nickname.Equals(_playerNickname)));
 
 				if (room == null) return RedirectToAction("Index");
-				else return View(GetSelectedRoomViewModel(room.RoomId));
+				else return View(GetGameViewModel(room.RoomId));
 			}
 
 			int id = int.Parse(TempData["roomId"].ToString());
 			TempData.Remove("roomId");
 
-			return View(GetSelectedRoomViewModel(id));
+			return View(GetGameViewModel(id));
 		}
 
-		private SelectedRoomViewModel GetSelectedRoomViewModel(int id)
+		private GameRoomViewModel GetGameViewModel(int id)
 		{
-			SelectedRoomViewModel selectedRoom = new SelectedRoomViewModel
+			GameRoomViewModel gameRoom = new GameRoomViewModel
 			{
 				RoomId = id,
 				Room = _gameLobby.Rooms.FirstOrDefault(x => x.RoomId == id),
 				Player = _gameLobby.Players.FirstOrDefault(p => p.Nickname.Equals(_playerNickname))
 			};
 
-			return selectedRoom;
+			gameRoom.GameField = gameRoom.Player.GameField;
+
+			return gameRoom;
+		}
+
+		public IActionResult LeaveRoom()
+		{
+			return RedirectToAction("Index");
+		}
+
+		[HttpPost]
+		public IActionResult Room(GameRoomViewModel gameRoom)
+		{
+			var room = _gameLobby.Rooms.Find(r => r.RoomId == gameRoom.RoomId);
+
+			if (ModelState.IsValid && room.AllPlayersAreReady)
+			{
+				return RedirectToAction("Index", "Game");
+			}
+
+			return View(GetGameViewModel(gameRoom.RoomId));
 		}
 	}
 }

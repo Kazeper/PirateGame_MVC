@@ -1,74 +1,79 @@
 ﻿@using Microsoft.AspNetCore.Http;
-@model SelectedRoomViewModel
+@model GameRoomViewModel
 @{
 	ViewData["Title"] = "Room";
 }
 <script type="text/javascript">
 	var playerNickname = '@Context.Session.GetString("playerNickname")';
 	var roomId = @Model.RoomId;
+	var maxPlayers = @Model.Room.MaxPlayers;
 </script>
 
-<h6>Room : @Model.Room.RoomName</h6>
-
-<br />
-<br />
+<div class="row justify-content-center">
+	<h6>Room : @Model.Room.RoomName</h6>
+</div>
+@Html.ValidationSummary(false, "", new { @class = "text-danger" })
 
 <div class="container">
-	<div class="row">
-		<div class="col-md-2">
-			<div class="row justify-content-center">
-				<h4 class="">Players</h4>
+	<form id="startGame" asp-action="Room">
+		<input asp-for="@Model.RoomId" hidden />
+		<div class="row">
+			<div class="col-md-2">
+				<div class="row justify-content-center">
+					<h4 id="players-list-title">Players @Model.Room.Players.Count/@Model.Room.MaxPlayers</h4>
+				</div>
+				<div class="row" id="listOfPlayers">
+					@foreach (Player player in Model.Room.Players)
+					{
+						<div class="col" id="@player.Nickname">
+							<div class="ready-box"></div>
+							<div class="text-justify">@player.Nickname</div>
+						</div>
+						<div class="w-100"></div>
+
+					}
+				</div>
 			</div>
-			<div class="row" id="listOfPlayers">
-				@foreach (Player player in Model.Room.Players)
-				{
-					<div class="col" id="@player.Nickname">
-						<div class="ready-box"></div>
-						<div class="text-justify">@player.Nickname</div>						
-					</div>
-					<div class="w-100"></div>
-					
-				}
-			</div>
-		</div>
-		<div class="col-md-4 border border-warning mx-0 px-0">
-			<span>drag&drop elements to set your gamefield</span>
-			@{
-				int index = 0;
-				string imgPath;
+			<div class="col-md-4 border border-warning mx-0 px-0">
+				<span class="justify-content-center">drag&drop elements to set your gamefield</span>
+				@{
+					int index = 0;
+					string imgPath;
 
-				for (int i = 0; i < GameSettings.NumberOfRows; i++)
-				{
-					<div class="row no-gutters justify-content-center mx-0 px-0">
+					for (int i = 0; i < GameSettings.NumberOfRows; i++)
+					{
+						<div class="row no-gutters justify-content-center mx-0 px-0">
 
-						@for (int j = 0; j < GameSettings.NumberOfColumns; j++)
-						{
-							<div id="@i _@j">
+							@for (int j = 0; j < GameSettings.NumberOfColumns; j++)
+							{
+								<div id="el-@i _@j">
 
-								@{
-									imgPath = @Model.Player.GameField[index].ToString() + ".png";
-								}
-								<div id="_@index" class="img-fluid">
-									<input asp-for="@Model.Player.GameField[index]" value="@Model.Player.GameField[index]" type="hidden" />
-									<img id="@i -@j" class="img-fluid" src="~/resources/@imgPath" alt="" draggable="true" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)" />
+									@{
+										imgPath = @Model.Player.GameField[index].ToString() + ".png";
+									}
+									<div id="_@index" class="img-fluid">
+										<input asp-for="@Model.GameField[index]" value="@Model.Player.GameField[index]" type="hidden" />
+										<img id="img-@i -@j" class="img-fluid" src="~/resources/@imgPath" alt="" draggable="true" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)" />
+									</div>
+
 								</div>
+								index++;
+							}
 
-							</div>
-							index++;
-						}
-
-					</div>
+						</div>
+					}
 				}
-			}
+			</div>
+			<partial name="_ChatPartial" />
 		</div>
-		<partial name="_ChatPartial" />
-	</div>
-	<br />
-	<div class="row">
-		<div class="offset-2" col-md-2>
-			<button class="btn-positive" id="ready-btn">Ready!</button>
+		<br />
+		<div class="row">
+			<div class="offset-md-2 col-md-4">
+				<button class="btn-positive" id="ready-btn">Ready!</button>
+				<a class="btn-negative" asp-controller="Lobby" asp-action="LeaveRoom" id="leave-btn">Leave room</a>
+			</div>
 		</div>
-	</div>
+	</form>
 </div>
 
 @section Scripts

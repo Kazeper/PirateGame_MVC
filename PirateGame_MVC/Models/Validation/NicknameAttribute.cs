@@ -17,7 +17,7 @@ namespace PirateGame_MVC.Models.Validation
 		protected override ValidationResult IsValid(object value, ValidationContext validationContext)
 		{
 			_gameLobby = (Lobby)validationContext.GetService(typeof(Lobby));
-			var player = (Player)validationContext.ObjectInstance;
+			//var player = (Player)validationContext.ObjectInstance;//delete????
 			this.nickname = (string)value;
 
 			if (NicknameIsTaken(nickname))

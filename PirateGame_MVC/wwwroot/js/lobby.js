@@ -30,7 +30,7 @@ joinRoom.addEventListener("click", function (event) {
 	});
 
 	event.preventDefault();
-	setTimeout(acceptForm, 2000);
+	setTimeout(acceptForm, 500);
 });
 
 function acceptForm() {

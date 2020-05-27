@@ -1,36 +1,43 @@
 ﻿"use strict";
 var listOfPlayers = document.getElementById('listOfPlayers');
 var readyButton = document.getElementById('ready-btn');
+var leaveButton = document.getElementById('leave-btn');
 var playerIsReady = false;
 
 readyButton.addEventListener("click", function (event) {
-	var readyBox = document.querySelector('#' + playerNickname + '.col .ready-box');
-
 	playerIsReady = !playerIsReady;
 
-	if (playerIsReady) {
-		readyBox.classList.add('ready-box-changed');
-		readyBox.innerHTML = '&radic;';
+	changeButton();
 
-		readyButton.classList.add('ready-box-changed');
+	connection.invoke("UpdatePlayersState", playerNickname, roomId, playerIsReady).catch(function (err) {
+		return console.error(err.toString());
+	});
 
-		connection.invoke("UpdatePlayerState")
-	}
-	else {
-		readyBox.classList.remove('ready-box-changed');
-		readyBox.innerHTML = '';
-		readyButton.classList.remove('ready-box-changed');
-	}
 	event.preventDefault();
 });
 
+function changeButton() {
+	playerIsReady ? readyButton.classList.add('ready-box-changed') : readyButton.classList.remove('ready-box-changed');
+}
+
+leaveButton.addEventListener("click", function (event) {
+	connection.invoke("LeaveRoom", playerNickname, roomId).catch(function (err) {
+		return console.error(err.toString());
+	})
+});
+
 connection.on("ReceivePlayers", function (serializedPlayers) {
+	var allPlayersAreReady = true;
 	var players = JSON.parse(serializedPlayers);
-	console.log(serializedPlayers);
+	var playersListTitle = document.getElementById("players-list-title");
+	playersListTitle.innerHTML = "Players " + players.length + "/" + maxPlayers;
 
 	clearListOfPlayers();
 
 	players.forEach(player => {
+		if (!player.GameFieldIsSet) {
+			allPlayersAreReady = false;
+		}
 		var divCol = document.createElement("div");
 		divCol.setAttribute("class", "col");
 		divCol.setAttribute("id", player.Nickname);
@@ -50,9 +57,28 @@ connection.on("ReceivePlayers", function (serializedPlayers) {
 
 		listOfPlayers.appendChild(divCol);
 		listOfPlayers.appendChild(divW100);
+
+		updatePlayerState(player.Nickname, player.GameFieldIsSet);
 	})
+
+	if (players.length == maxPlayers && allPlayersAreReady) {
+		//form.submit()???????????????
+	}
 });
 
 function clearListOfPlayers() {
 	listOfPlayers.innerHTML = "";
+}
+
+function updatePlayerState(nickname, playerIsReady) {
+	var readyBox = document.querySelector('#' + nickname + '.col .ready-box');
+
+	if (playerIsReady) {
+		readyBox.classList.add('ready-box-changed');
+		readyBox.innerHTML = '&radic;';
+	}
+	else {
+		readyBox.classList.remove('ready-box-changed');
+		readyBox.innerHTML = '';
+	}
 }

@@ -19,7 +19,7 @@ namespace PirateGame_MVC.Models.Validation
 		protected override ValidationResult IsValid(object value, ValidationContext validationContext)
 
 		{
-			var player = (Player)validationContext.ObjectInstance;
+			//var roomViewModel = (IRoomViewModel)validationContext.ObjectInstance;
 			this.GameField = (int[])value;
 
 			List<int[]> amountOfIndividualFieldType = new List<int[]>()

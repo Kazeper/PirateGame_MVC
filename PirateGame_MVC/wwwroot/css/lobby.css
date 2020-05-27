@@ -46,9 +46,9 @@ hr {
 
 .chat-bubble-left {
 	font-size: 12px;
-	padding: 10px 14px;
+	padding: 4px 6px;
 	background: #606060;
-	margin: 10px 12px;
+	margin: 5px 6px;
 	border-radius: 9px;
 	position: relative;
 	animation: fadeIn 0.5s ease-in;
@@ -56,9 +56,9 @@ hr {
 
 .chat-bubble-right {
 	font-size: 12px;
-	padding: 10px 14px;
+	padding: 4px 6px;
 	background: #900090;
-	margin: 10px 12px;
+	margin: 5px 6px;
 	border-radius: 9px;
 	position: relative;
 	animation: fadeIn 0.5s ease-in;
@@ -109,6 +109,21 @@ button {
 	.btn-positive:hover {
 		background-color: #808080;
 		color: lightcoral;
+	}
+
+.btn-negative {
+	font-size: 12px;
+	border: 2px solid #303050;
+	border-radius: 5px;
+	color: red;
+	padding: 5px 15px;
+	margin-right: 5px;
+	float: right;
+}
+
+	.btn-negative:hover {
+		background-color: #808080;
+		color: maroon;
 	}
 
 .create-room {

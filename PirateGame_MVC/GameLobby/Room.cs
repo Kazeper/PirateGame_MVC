@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using PirateGame_MVC.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,8 @@ namespace PirateGame_MVC.GameLobby
 		public string RoomName { get; set; }
 		public int MaxPlayers { get; set; }
 		public List<Player> Players { get; set; }
+		public bool AllPlayersAreReady { get; set; }
+		public Game Game { get; set; }
 
 		public Room(string roomName, int maxPlayers, ref Player creator, int id)
 		{
