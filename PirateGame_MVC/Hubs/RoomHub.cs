@@ -45,8 +45,17 @@ namespace PirateGame_MVC
 		{
 			await Groups.RemoveFromGroupAsync(Context.ConnectionId, roomId);
 			_gameLobby.LeaveRoom(_gameLobby.GetPlayer(playerNickname));
+			var room = _gameLobby.Rooms.Find(r => r.RoomId == int.Parse(roomId));
 
-			await GetPlayers(int.Parse(roomId));
+			if (room.Players.Count > 0)
+			{
+				await GetPlayers(int.Parse(roomId));
+			}
+			else
+			{
+				_gameLobby.RemoveRoom(room);
+				await Clients.Caller.SendAsync("GoBack");
+			}
 		}
 	}
 }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using PirateGame_MVC.Models;
 
 namespace PirateGame_MVC.Controllers
 {
@@ -10,7 +12,12 @@ namespace PirateGame_MVC.Controllers
 	{
 		public IActionResult Index()
 		{
-			return View();
+			GameRoomViewModel gameRoom = null;
+			if (TempData["gameRoom"] != null)
+			{
+				gameRoom = JsonConvert.DeserializeObject<GameRoomViewModel>((string)TempData["gameRoom"]);
+			}
+			return View(gameRoom);
 		}
 	}
 }

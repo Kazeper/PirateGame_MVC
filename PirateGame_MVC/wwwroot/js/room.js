@@ -2,6 +2,7 @@
 var listOfPlayers = document.getElementById('listOfPlayers');
 var readyButton = document.getElementById('ready-btn');
 var leaveButton = document.getElementById('leave-btn');
+var startGameForm = document.getElementById('startGame');
 var playerIsReady = false;
 
 readyButton.addEventListener("click", function (event) {
@@ -24,6 +25,11 @@ leaveButton.addEventListener("click", function (event) {
 	connection.invoke("LeaveRoom", playerNickname, roomId).catch(function (err) {
 		return console.error(err.toString());
 	})
+	event.preventDefault();
+});
+
+connection.on("GoBack", function () {
+	window.history.back();
 });
 
 connection.on("ReceivePlayers", function (serializedPlayers) {
@@ -62,7 +68,7 @@ connection.on("ReceivePlayers", function (serializedPlayers) {
 	})
 
 	if (players.length == maxPlayers && allPlayersAreReady) {
-		//form.submit()???????????????
+		startGameForm.submit();
 	}
 });
 

@@ -111,6 +111,15 @@ button {
 		color: lightcoral;
 	}
 
+.btn-positive-disabled {
+	font-size: 12px;
+	border: 2px solid #303050;
+	border-radius: 5px;
+	color: orange;
+	padding: 5px 15px;
+	margin-right: 5px;
+}
+
 .btn-negative {
 	font-size: 12px;
 	border: 2px solid #303050;

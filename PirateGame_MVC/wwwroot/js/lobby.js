@@ -1,7 +1,6 @@
 "use strict";
 const createRoom = document.querySelector('[data-create-button]');
 const joinRoom = document.getElementById('joinRoom-btn');
-console.log(joinRoom);
 const form = document.querySelector('form');
 const roomIdInput = document.getElementById('roomIdInput');
 const select = document.getElementById('roomSelect');
@@ -46,6 +45,10 @@ connection.on("GoToCreatedRoom", function (roomId) {
 connection.on("ReceiveRoomList", function (roomList) {
 	var rooms = JSON.parse(roomList);
 	var roomSelect = document.getElementById('roomSelect');
+
+	if (rooms.length > 0) {
+		enableJoinRoomBtn();
+	}
 	clearRoomSelect(roomSelect);
 
 	rooms.forEach(room => {
@@ -56,6 +59,12 @@ connection.on("ReceiveRoomList", function (roomList) {
 		roomSelect.appendChild(option);
 	});
 });
+
+function enableJoinRoomBtn() {
+	joinRoom.classList.remove('btn-positive-disabled');
+	joinRoom.classList.add('btn-positive');
+	joinRoom.disabled = false;
+};
 
 function clearRoomSelect(selectElement) {
 	var i, L = selectElement.options.length - 1;

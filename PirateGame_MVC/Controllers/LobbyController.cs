@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using Newtonsoft.Json;
 using PirateGame_MVC.GameLobby;
 using PirateGame_MVC.Hubs;
 using PirateGame_MVC.Models;
@@ -66,13 +67,13 @@ namespace PirateGame_MVC.Controllers
 			return View(GetGameViewModel(id));
 		}
 
-		private GameRoomViewModel GetGameViewModel(int id)
+		private GameRoomViewModel GetGameViewModel(int roomId)
 		{
 			GameRoomViewModel gameRoom = new GameRoomViewModel
 			{
-				RoomId = id,
-				Room = _gameLobby.Rooms.FirstOrDefault(x => x.RoomId == id),
-				Player = _gameLobby.Players.FirstOrDefault(p => p.Nickname.Equals(_playerNickname))
+				RoomId = roomId,
+				Room = _gameLobby.Rooms.FirstOrDefault(x => x.RoomId == roomId),
+				Player = _gameLobby.GetPlayer(_playerNickname)
 			};
 
 			gameRoom.GameField = gameRoom.Player.GameField;
@@ -90,8 +91,15 @@ namespace PirateGame_MVC.Controllers
 		{
 			var room = _gameLobby.Rooms.Find(r => r.RoomId == gameRoom.RoomId);
 
-			if (ModelState.IsValid && room.AllPlayersAreReady)
+			if (ModelState.IsValid && room.AllPlayersAreReady())
 			{
+				var player = _gameLobby.GetPlayer(_playerNickname);
+				player.SetGameField(gameRoom.GameField);
+
+				gameRoom.Player = player;
+				gameRoom.Room = room;
+				TempData["gameRoom"] = JsonConvert.SerializeObject(gameRoom);
+
 				return RedirectToAction("Index", "Game");
 			}
 

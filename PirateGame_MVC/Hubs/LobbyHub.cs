@@ -34,6 +34,7 @@ namespace PirateGame_MVC.Hubs
 			var player = _gameLobby.GetPlayer(playerNickname);
 			var room = _gameLobby.Rooms.FirstOrDefault(r => r.RoomId == roomId);
 
+			//TODO verify is there enough space for new player
 			room.AddPlayer(player);
 			player.IsInRoom = true;
 

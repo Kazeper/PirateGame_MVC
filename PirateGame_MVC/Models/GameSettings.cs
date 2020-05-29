@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PirateGame_MVC.Models
 {
-	public static class GameSettings //TODO zastanowić się nad inną nazwą klasy
+	public static class GameSettings //TODO think about new class name
 	{
 		public static int NumberOfRows { get; } = 7;
 		public static int NumberOfColumns { get; } = 7;
@@ -13,7 +13,7 @@ namespace PirateGame_MVC.Models
 
 		public static List<int[]> AvailableFieldTypes { get; set; } = new List<int[]>()
 		{
-			//		{amount, type of field }
+			//		{ amount, type of field }
 			new int[] { 1,1},
 			new int[] { 1,2},
 			new int[] { 1,3},

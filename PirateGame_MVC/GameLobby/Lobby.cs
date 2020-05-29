@@ -74,15 +74,10 @@ namespace PirateGame_MVC.GameLobby
 				room.Players.Remove(player);
 				player.IsInRoom = false;
 				player.GameFieldIsSet = false;
-
-				if (room.Players.Count == 0)
-				{
-					RemoveRoom(room);
-				}
 			}
 		}
 
-		private void RemoveRoom(Room room)
+		public void RemoveRoom(Room room)
 		{
 			Rooms.Remove(room);
 		}

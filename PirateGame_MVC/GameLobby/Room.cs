@@ -13,7 +13,6 @@ namespace PirateGame_MVC.GameLobby
 		public string RoomName { get; set; }
 		public int MaxPlayers { get; set; }
 		public List<Player> Players { get; set; }
-		public bool AllPlayersAreReady { get; set; }
 		public Game Game { get; set; }
 
 		public Room(string roomName, int maxPlayers, ref Player creator, int id)
@@ -31,6 +30,19 @@ namespace PirateGame_MVC.GameLobby
 		public void AddPlayer(Player player)
 		{
 			Players.Add(player);
+		}
+
+		public bool AllPlayersAreReady()
+		{
+			foreach (var player in Players)
+			{
+				if (!player.GameFieldIsSet)
+				{
+					return false;
+				}
+			}
+
+			return true;
 		}
 	}
 }

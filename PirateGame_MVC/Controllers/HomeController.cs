@@ -38,10 +38,10 @@ namespace PirateGame_MVC.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				//if (HttpContext.Session.GetString("playerNickname") != null)
-				//{
-				//	return RedirectToAction("Index");
-				//}//TODO uncomment afer tests
+				if (HttpContext.Session.GetString("playerNickname") != null)
+				{
+					return RedirectToAction("Index", "Lobby");
+				}
 
 				player.Ip = _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
 				_gameLobby.Players.Add(player);
