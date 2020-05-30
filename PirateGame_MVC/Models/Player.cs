@@ -75,6 +75,8 @@ namespace PirateGame_MVC
 		{
 			GameField = new int[GameSettings.NumberOfRows * GameSettings.NumberOfColumns];
 			SetGameFieldRandomly(null);
+			Bank = 0;
+			Wallet = 0;
 		}
 
 		public void SetGameField(int[] gameField)

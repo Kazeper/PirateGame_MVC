@@ -98,6 +98,7 @@ namespace PirateGame_MVC.Controllers
 
 				gameRoom.Player = player;
 				gameRoom.Room = room;
+				gameRoom.Room.Game = gameRoom.Room.Game ?? new Game(gameRoom.Room.Players);
 				TempData["gameRoom"] = JsonConvert.SerializeObject(gameRoom);
 
 				return RedirectToAction("Index", "Game");

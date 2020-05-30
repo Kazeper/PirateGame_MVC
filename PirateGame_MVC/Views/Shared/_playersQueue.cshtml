@@ -1,0 +1,27 @@
+﻿@model Game
+
+	<div class="col-md-2">
+		<div class="row justify-content-center">
+			<h4 id="players-list-title"> QUEUE</h4>
+		</div>
+		<div class="row" id="listOfPlayers">
+			@*@foreach (Player player in Model.Players)
+			{
+				<div class="col" id="@player.Nickname">
+					<div class="ready-box"></div>
+					<div class="text-justify">@player.Nickname</div>
+				</div>
+				<div class="w-100"></div>
+
+			}*@
+
+			@for (int i = 0; i < @Model.playerQueue.Length; i++)
+			{
+				string nickname = @Model.Players[Model.playerQueue[i]].Nickname;
+				<div class="col" id="@nickname">
+					<div class="text-justify">@nickname</div>
+				</div>
+				<div class="w-100"></div>
+			}
+		</div>
+	</div>

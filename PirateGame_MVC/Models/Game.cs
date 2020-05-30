@@ -11,7 +11,7 @@ namespace PirateGame_MVC.Models
 		public List<Player> Players { get; set; }
 		public List<int> AvailableFields { get; set; }
 
-		private Random random = new Random();
+		private readonly Random random = new Random();
 		public int[] playerQueue;
 		public int currentPlayer;
 		public int drawField;
@@ -45,7 +45,13 @@ namespace PirateGame_MVC.Models
 
 		private void UpdatePlayerIndex(ref int playerIndex)
 		{
-			playerIndex = (playerIndex % Players.Count) + 1;
+			if (++playerIndex % Players.Count == 0) playerIndex = 0;
+			else playerIndex %= Players.Count;
+		}
+
+		private int SetFirstPlayer()
+		{
+			return random.Next(0, Players.Count);
 		}
 
 		public int GetNextField()
@@ -66,11 +72,6 @@ namespace PirateGame_MVC.Models
 		private void DeleteField(int field)
 		{
 			AvailableFields.Remove(field);
-		}
-
-		private int SetFirstPlayer()
-		{
-			return random.Next(0, Players.Count);
 		}
 
 		public void ReadPlayersFields()

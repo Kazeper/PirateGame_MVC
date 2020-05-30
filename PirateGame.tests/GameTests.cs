@@ -1,4 +1,5 @@
-﻿using PirateBayMVC.Models;
+﻿using PirateGame_MVC;
+using PirateGame_MVC.Models;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -39,26 +40,26 @@ namespace PirateGame.tests
 			{
 				_stdOut.WriteLine(game.playerQueue[i].ToString());
 
-				if (game.playerQueue[i] == players.Count)
+				if (game.playerQueue[i] == players.Count - 1) // if is the highest NO
 				{
-					if (i == (game.playerQueue.Length - 1))
+					if (i == (game.playerQueue.Length - 1))// if is the last
 					{
-						Assert.Equal(1, game.playerQueue[0]);
+						Assert.Equal(0, game.playerQueue[0]);
 					}
-					else
+					else // its not last so take the next one
 					{
-						Assert.Equal(1, game.playerQueue[i + 1]);
+						Assert.Equal(0, game.playerQueue[i + 1]);
 					}
 					continue;
 				}
 
-				if (i == (game.playerQueue.Length - 1))
+				if (i == (game.playerQueue.Length - 1))// if is the last
 				{
-					Assert.Equal(game.playerQueue[i] + 1, game.playerQueue[0]);
+					Assert.Equal(game.playerQueue[i] + 1, game.playerQueue[0]);// the first one should be greater by one
 				}
 				else
 				{
-					Assert.Equal(game.playerQueue[i] + 1, game.playerQueue[i + 1]);
+					Assert.Equal(game.playerQueue[i] + 1, game.playerQueue[i + 1]); // next one is greater  by one
 				}
 			}
 		}

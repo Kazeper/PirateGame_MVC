@@ -1,4 +1,5 @@
-using PirateBayMVC.Models;
+using PirateGame_MVC;
+using PirateGame_MVC.Models;
 using System;
 using Xunit;
 

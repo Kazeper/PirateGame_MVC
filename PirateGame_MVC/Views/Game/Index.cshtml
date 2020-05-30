@@ -1,8 +1,29 @@
 ﻿@model GameRoomViewModel
 @{
-    ViewData["Title"] = "Index";
+	ViewData["Title"] = "Index";
 }
 
 <h1>Index @Model.RoomId</h1>
 
+<div class="container">
+	<h4 class="justify-content-center">Your stats</h4>
 
+	<div class="row">
+		<div class="col-6 justify-content-center">
+			Wallet: @Model.Player.Wallet
+		</div>
+
+		<div class="col-6 justify-content-center">
+			Bank: @Model.Player.Bank
+		</div>
+	</div>
+	<br/>
+	<div class="row">
+		<partial name="_playersQueue" model="@Model.Room.Game" />
+		<partial name="_gameFieldPartial" model="@Model.GameField" />
+		<partial name="_chatPartial" />
+	</div>
+</div>
+
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/roomChat.js"></script>

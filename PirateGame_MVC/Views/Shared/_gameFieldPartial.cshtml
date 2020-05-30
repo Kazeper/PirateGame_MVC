@@ -1,0 +1,34 @@
+﻿@model int[]
+
+
+	<div class="col-md-4 border border-warning mx-0 px-0">
+		@{
+			int index = 0;
+			string imgPath;
+
+			for (int i = 0; i < GameSettings.NumberOfRows; i++)
+			{
+				<div class="row no-gutters justify-content-center mx-0 px-0">
+
+					@for (int j = 0; j < GameSettings.NumberOfColumns; j++)
+					{
+						<div id="el-@i _@j">
+
+							@{
+								imgPath = @Model[index].ToString() + ".png";
+							}
+							@{
+								//TODO fix Ids
+							}
+							<div id="_@index" class="img-fluid">
+								<img id="img-@i -@j" class="img-fluid" src="~/resources/@imgPath" alt="" />
+							</div>
+
+						</div>
+						index++;
+					}
+
+				</div>
+			}
+		}
+	</div>
