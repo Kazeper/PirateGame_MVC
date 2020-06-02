@@ -20,6 +20,10 @@
 				string nickname = @Model.Players[Model.playerQueue[i]].Nickname;
 				<div class="col" id="@nickname">
 					<div class="text-justify">@nickname</div>
+					@if (i == 0)
+					{
+						<div class="col material-icons float-right">keyboard_backspace</div>
+					}
 				</div>
 				<div class="w-100"></div>
 			}

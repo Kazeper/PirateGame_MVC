@@ -13,17 +13,13 @@ namespace PirateGame_MVC.Controllers
 	{
 		public IActionResult Index()
 		{
-			GameRoomViewModel gameRoom = null;
 			if (TempData["gameRoom"] != null)
 			{
-				gameRoom = JsonConvert.DeserializeObject<GameRoomViewModel>((string)TempData["gameRoom"]);
+				GameRoomViewModel gameRoom = JsonConvert.DeserializeObject<GameRoomViewModel>((string)TempData["gameRoom"]);
 
-				//if (gameRoom.Room.Players[0].Nickname == HttpContext.Session.GetString("playerNickname"))
-				//{
-				//	gameRoom.Room.Game = new Game(gameRoom.Room.Players);
-				//}
+				return View(gameRoom);
 			}
-			return View(gameRoom);
+			else return RedirectToAction("Index", "Lobby");
 		}
 	}
 }
