@@ -1,6 +1,7 @@
 ﻿@model GameRoomViewModel
 @{
 	ViewData["Title"] = "Index";
+	bool appendGameNotification = true; 
 }
 
 
@@ -21,7 +22,7 @@
 	<div class="row">
 		<partial name="_playersQueue" model="@Model.Room.Game" />
 		<partial name="_gameFieldPartial" model="@Model.GameField" />
-		<partial name="_chatPartial" />
+		<partial name="_chatPartial" model="@appendGameNotification" />
 	</div>
 </div>
 
