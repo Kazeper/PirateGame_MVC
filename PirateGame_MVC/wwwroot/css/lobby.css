@@ -30,8 +30,6 @@
 	color: ivory;
 }
 
-/*new */
-
 input {
 	font-size: 12px;
 	border: none;
@@ -90,9 +88,6 @@ button {
 	color: orange;
 }
 
-	button#createRoom-btn {
-	}
-
 	button#joinRoom-btn {
 		float: right;
 	}
@@ -135,7 +130,10 @@ button {
 		color: maroon;
 	}
 
-.create-room {
+/*
+	classes from popup window. DELETE AFTER TESTs
+
+	.create-room {
 	position: fixed;
 	top: 50%;
 	left: 50%;
@@ -192,7 +190,7 @@ button {
 	#overlay.active {
 		opacity: 1;
 		pointer-events: all;
-	}
+	}*/
 
 .ready-box {
 	height: 20px;
