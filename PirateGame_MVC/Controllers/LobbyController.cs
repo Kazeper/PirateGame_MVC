@@ -16,14 +16,14 @@ namespace PirateGame_MVC.Controllers
 	{
 		private readonly IHttpContextAccessor _accessor;
 		private readonly Lobby _gameLobby;
-		private readonly IHubContext<RoomHub> _roomHub;
+		private readonly IHubContext<GameHub> _gameHub;
 		private readonly string _playerNickname;
 
-		public LobbyController(Lobby gameLobby, IHttpContextAccessor accessor, IHubContext<RoomHub> roomHub)
+		public LobbyController(Lobby gameLobby, IHttpContextAccessor accessor, IHubContext<GameHub> gameHub)
 		{
 			_accessor = accessor;
 			_gameLobby = gameLobby;
-			_roomHub = roomHub;
+			_gameHub = gameHub;
 			_playerNickname = _accessor.HttpContext.Session.GetString("playerNickname");
 		}
 
@@ -32,12 +32,6 @@ namespace PirateGame_MVC.Controllers
 			if (String.IsNullOrEmpty(_playerNickname))
 			{
 				return RedirectToAction("Index", "Home");
-			}
-
-			Player player = _gameLobby.GetPlayer(_playerNickname);
-			if (player.IsInRoom)
-			{
-				_gameLobby.LeaveRoom(player);
 			}
 
 			return View();
@@ -98,7 +92,7 @@ namespace PirateGame_MVC.Controllers
 
 				gameRoom.Player = player;
 				gameRoom.Room = room;
-				gameRoom.Room.Game = gameRoom.Room.Game ?? new Game(gameRoom.Room.Players);
+				gameRoom.Room.Game = gameRoom.Room.Game ?? new Game(gameRoom.Room.Players, _gameHub);
 				TempData["gameRoom"] = JsonConvert.SerializeObject(gameRoom);
 
 				return RedirectToAction("Index", "Game");

@@ -22,13 +22,12 @@ function changeButton() {
 }
 
 leaveButton.addEventListener("click", function (event) {
-	connection.invoke("LeaveRoom", playerNickname, roomId).catch(function (err) {
-		return console.error(err.toString());
-	})
+	leaveRoom();
 	event.preventDefault();
 });
 
 connection.on("GoBack", function () {
+	window.removeEventListener("beforeunload", showApprovalWindow);
 	window.history.back();
 });
 
@@ -68,6 +67,8 @@ connection.on("ReceivePlayers", function (serializedPlayers) {
 	})
 
 	if (players.length == maxPlayers && allPlayersAreReady) {
+		window.removeEventListener("beforeunload", showApprovalWindow);
+		window.removeEventListener("unload", leaveRoom);
 		startGameForm.submit();
 	}
 });
@@ -88,3 +89,19 @@ function updatePlayerState(nickname, playerIsReady) {
 		readyBox.innerHTML = '';
 	}
 }
+
+//tests
+window.addEventListener("beforeunload", showApprovalWindow);
+
+function showApprovalWindow(event) {
+	event.returnValue = "Are you sure you want to leave this page?";
+};
+
+window.addEventListener("unload", leaveRoom);
+
+function leaveRoom() {
+	connection.invoke("LeaveRoom", playerNickname, roomId).catch(function (err) {
+		return console.error(err.toString());
+	})
+};
+//tests

@@ -1,4 +1,7 @@
-﻿using PirateGame_MVC.Models;
+﻿using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.DependencyInjection;
+using PirateGame_MVC.Hubs;
+using PirateGame_MVC.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,11 +15,12 @@ namespace PirateGame_MVC.Models
 		public List<int> AvailableFields { get; set; }
 
 		private readonly Random random = new Random();
+		private readonly IHubContext<GameHub> _gameHub;
 		public int[] playerQueue;
 		public int currentPlayer;
 		public int drawField;
 
-		public Game(List<Player> players)
+		public Game(List<Player> players, IHubContext<GameHub> gameHub)
 		{
 			Players = players;
 
@@ -24,6 +28,7 @@ namespace PirateGame_MVC.Models
 			FillPlayerQueue();
 			AvailableFields = GameSettings.CreateAvailableFieldsList();
 			currentPlayer = SetFirstPlayer();
+			_gameHub = gameHub;
 		}
 
 		private void CreatePlayerQueue()

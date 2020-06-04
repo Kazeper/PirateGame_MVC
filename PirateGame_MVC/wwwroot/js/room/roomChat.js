@@ -6,6 +6,9 @@ document.getElementById("sendButton").disabled = true;
 
 connection.start().then(function () {
 	connection.invoke("AddToGroup", roomId);
+	connection.invoke("UpdatePlayersState", playerNickname, roomId, false /* playerIsReady */).catch(function (err) {
+		return console.error(err.toString());
+	});
 	document.getElementById("sendButton").disabled = false;
 }).catch(function (err) {
 	return console.error(err.toString());

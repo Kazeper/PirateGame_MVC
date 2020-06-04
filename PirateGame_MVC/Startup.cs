@@ -65,6 +65,7 @@ namespace PirateGame_MVC
 			{
 				route.MapHub<LobbyHub>("/Lobby/Index");
 				route.MapHub<RoomHub>("/Room");
+				route.MapHub<GameHub>("/Game");
 			});
 
 			app.UseHttpsRedirection();

@@ -15,5 +15,10 @@ namespace PirateGame_MVC.Hubs
 		{
 			_gamelobby = gameLobby;
 		}
+
+		public async Task AddToGroup(string roomId)
+		{
+			await Groups.AddToGroupAsync(Context.ConnectionId, roomId);
+		}
 	}
 }
