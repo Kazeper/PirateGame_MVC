@@ -1,5 +1,5 @@
 ﻿"use strict";
-var connection = new signalR.HubConnectionBuilder().withUrl("/Room").build(); //TODO set url
+//var connection = new signalR.HubConnectionBuilder().withUrl("/Room").build(); //TODO set url
 
 //Disable send button until connection is established
 document.getElementById("sendButton").disabled = true;

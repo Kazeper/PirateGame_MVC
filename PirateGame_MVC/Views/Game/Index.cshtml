@@ -1,9 +1,14 @@
-﻿@model GameRoomViewModel
+﻿@using Microsoft.AspNetCore.Http;
+@model GameRoomViewModel
 @{
 	ViewData["Title"] = "Index";
-	bool appendGameNotification = true; 
+	bool appendGameNotification = true;
 }
-
+<script type="text/javascript">
+	var playerNickname = '@Context.Session.GetString("playerNickname")';
+	var roomId = @Model.RoomId;
+	var targetNickname = '@Model.Room.Players[0].Nickname';
+</script>
 
 <h1>Index @Model.RoomId</h1>
 <div class="container">
@@ -18,14 +23,17 @@
 			Bank: @Model.Player.Bank
 		</div>
 	</div>
-	<br/>
+	<br />
 	<div class="row">
 		<partial name="_playersQueue" model="@Model.Room.Game" />
 		<partial name="_gameFieldPartial" model="@Model.GameField" />
 		<partial name="_chatPartial" model="@appendGameNotification" />
 	</div>
+	<button id="sendTargetNickname" class="btn-positive">Send Target Nickname</button>
 </div>
 
-
-<script src="~/js/signalr/dist/browser/signalr.js"></script>
-<script src="~/js/roomChat.js"></script>
+@section Scripts
+{ 
+	<script src="~/js/signalr/dist/browser/signalr.js"></script>
+	<script src="~/js/game/game.js"></script>
+}

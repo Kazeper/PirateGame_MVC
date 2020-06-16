@@ -15,6 +15,8 @@ namespace PirateGame_MVC.GameLobby
 		public List<Player> Players { get; set; }
 		public Game Game { get; set; }
 
+		public bool GameStarted { get; set; }
+
 		public Room(string roomName, int maxPlayers, ref Player creator, int id)
 		{
 			RoomId = id;
@@ -25,6 +27,8 @@ namespace PirateGame_MVC.GameLobby
 			{
 				creator
 			};
+
+			GameStarted = false;
 		}
 
 		public void AddPlayer(Player player)

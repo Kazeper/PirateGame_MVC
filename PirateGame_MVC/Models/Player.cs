@@ -58,7 +58,7 @@ namespace PirateGame_MVC
 		 * 05 - swap scores [action field]
 		 * 06 - Choose next field [action field]
 		 * 07 - Shield - block the bad [boost field]
-		 * 08 - Mirror - reflect the bad []
+		 * 08 - Mirror - reflect the bad [boost field]
 		 * 09 - Bomb - your wallet go to 0
 		 * 10 - double your wallet
 		 * 11 - deposit your cash at wallet to the bank
@@ -133,7 +133,7 @@ namespace PirateGame_MVC
 			//GameFieldIsSet = true;
 		}
 
-		public void ExecuteAction(int drawField)
+		public int ExecutePassiveAction(int drawField)
 		{
 			switch (GameField[drawField])
 			{
@@ -162,11 +162,11 @@ namespace PirateGame_MVC
 					break;
 
 				case 7:
-					VerifyShieldUse();
+					AddShield();
 					break;
 
 				case 8:
-					VerifyMirrorUse();
+					AddMirror();
 					break;
 
 				case 9:
@@ -200,6 +200,8 @@ namespace PirateGame_MVC
 				default:
 					break;
 			}
+
+			return GameField[drawField];
 		}
 
 		private void AddCash(int money)
@@ -260,6 +262,16 @@ namespace PirateGame_MVC
 		public void SetFieldAsEmpty(int drawField)
 		{
 			GameField[drawField] = 0;
+		}
+
+		private void AddMirror()
+		{
+			HasMirror = true;
+		}
+
+		private void AddShield()
+		{
+			HasShield = true;
 		}
 
 		public void VerifyMirrorUse()

@@ -5,6 +5,7 @@ using PirateGame_MVC.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace PirateGame_MVC.Models
@@ -13,14 +14,16 @@ namespace PirateGame_MVC.Models
 	{
 		public List<Player> Players { get; set; }
 		public List<int> AvailableFields { get; set; }
+		public bool TargetHasBeenReceived { get; set; }
+		public string TargetNickname { get; set; }
 
 		private readonly Random random = new Random();
-		private readonly IHubContext<GameHub> _gameHub;
+		private readonly IHubContext<GameHub, IGameHub> _gameHub;
 		public int[] playerQueue;
 		public int currentPlayer;
 		public int drawField;
 
-		public Game(List<Player> players, IHubContext<GameHub> gameHub)
+		public Game(List<Player> players, IHubContext<GameHub, IGameHub> gameHub)
 		{
 			Players = players;
 
@@ -79,11 +82,41 @@ namespace PirateGame_MVC.Models
 			AvailableFields.Remove(field);
 		}
 
-		public void ReadPlayersFields()
+		public async void ReadPlayersFields()
 		{
 			for (int i = 0; i < Players.Count; i++)
 			{
-				Players[playerQueue[i]].ExecuteAction(drawField);
+				Player player = Players[playerQueue[i]];
+				int playerField = player.GameField[drawField];
+				bool isActionField = playerField <= GameSettings.ActionFieldLastIndex;
+
+				if (isActionField)
+				{
+					await _gameHub.Clients.Client(player.ConnectionId).AskForTarget(playerField);
+					WaitForResponse();
+					//targetNickname = _gameHub.LoadTarget();
+					if (TargetNickname.Length > 2)
+					{
+						await _gameHub.Clients.Client(player.ConnectionId).ReceiveNotification(player.ConnectionId, "targetNickname received" + TargetNickname);
+					}
+				}
+				ClearActiveActionData();
+				player.ExecutePassiveAction(drawField);
+			}
+		}
+
+		private void ClearActiveActionData()
+		{
+			TargetNickname = "";
+			TargetHasBeenReceived = false;
+		}
+
+		private void WaitForResponse()
+		{
+			while (true)
+			{
+				Thread.Sleep(1000);
+				if (TargetHasBeenReceived) break;
 			}
 		}
 
@@ -95,6 +128,13 @@ namespace PirateGame_MVC.Models
 				ReadPlayersFields();
 				DeleteField(drawField);
 			}
+		}
+
+		private void ExecuteActionField(string playerConnectionId, int playerField)
+		{
+			//string targetNickname = "";
+			//_gameHub.AskForTarget(playerConnectionId, playerField);
+			//string targetNickname = _gameHub.LoadTarget();
 		}
 	}
 }
