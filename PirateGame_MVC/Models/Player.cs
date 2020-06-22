@@ -274,7 +274,7 @@ namespace PirateGame_MVC
 			HasShield = true;
 		}
 
-		public void VerifyMirrorUse()
+		public void VerifyMirrorUse()//TODO zmienić na bool - ANT
 		{
 			if (HasMirror)
 			{

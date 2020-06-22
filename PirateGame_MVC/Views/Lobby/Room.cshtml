@@ -14,7 +14,7 @@
 </div>
 @Html.ValidationSummary(false, "", new { @class = "text-danger" })
 
-<div class="container">
+<div class="container-fluid">
 	<form id="startGame" asp-action="Room">
 		<input asp-for="@Model.RoomId" hidden />
 		<div class="row">

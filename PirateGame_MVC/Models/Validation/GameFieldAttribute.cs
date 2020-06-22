@@ -84,7 +84,7 @@ namespace PirateGame_MVC.Models.Validation
 
 			foreach (int fieldValue in GameField)
 			{
-				if (!(fieldValue > 0 && fieldValue < 16))
+				if (!(fieldValue > 0 && fieldValue < 16))//TODO magic number - field value
 				{
 					result = false;
 				}

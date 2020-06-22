@@ -3,13 +3,7 @@
 var connection = new signalR.HubConnectionBuilder().withUrl("/Game/Index").build();
 
 connection.start().then(function () {
-	connection.invoke("AddToGroup", roomId).catch(function (err) {
-		return console.error(err.toString());
-	})
-	connection.invoke("SaveConnectionId", playerNickname).catch(function (err) {
-		return console.error(err.toString());
-	})
-	connection.invoke("StartGame", roomId).catch(function (err) {
+	connection.invoke("JoinGame", roomId, playerNickname).catch(function (err) {
 		return console.error(err.toString());
 	})
 }).catch(function (err) {

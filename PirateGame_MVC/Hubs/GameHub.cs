@@ -23,26 +23,23 @@ namespace PirateGame_MVC.Hubs
 			targetNickname = "";
 		}
 
-		public async Task AddToGroup(string roomId)
+		public async Task JoinGame(string roomId, string playerNickname)
 		{
+			Room room = _gamelobby.Rooms.Find(r => r.RoomId == int.Parse(roomId));
+
 			await Groups.AddToGroupAsync(Context.ConnectionId, roomId);
+			SaveConnectionId(playerNickname);
+
+			if (room.AllPlayersJoinedGame())
+			{
+				room.Game.StartGame();
+			}
 		}
 
 		public void SaveConnectionId(string playerNickname)
 		{
 			var player = _gamelobby.GetPlayer(playerNickname);
 			player.ConnectionId = Context.ConnectionId;
-		}
-
-		public async void StartGame(int roomId)
-		{
-			var room = _gamelobby.Rooms.Find(r => r.RoomId == roomId);
-
-			if (!room.GameStarted)
-			{
-				room.Game.StartGame();
-				room.GameStarted = true;
-			}
 		}
 
 		public void AskForTarget(string connectionId, int playerField)

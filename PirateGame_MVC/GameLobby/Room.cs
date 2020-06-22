@@ -48,5 +48,20 @@ namespace PirateGame_MVC.GameLobby
 
 			return true;
 		}
+
+		public bool AllPlayersJoinedGame()
+		{
+			bool result = true;
+
+			foreach (var player in Players)
+			{
+				if (player.ConnectionId == null)
+				{
+					result = false;
+				}
+			}
+
+			return result;
+		}
 	}
 }

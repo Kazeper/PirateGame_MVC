@@ -8,6 +8,7 @@ namespace PirateGame_MVC.Models
 	public static class GameSettings //TODO think about new class name
 	{
 		public static int NumberOfRows { get; } = 7;
+		public const int NUMBER_OF_ROWS = 7;
 		public static int NumberOfColumns { get; } = 7;
 		public static int MaxPlayers { get; } = 7;
 

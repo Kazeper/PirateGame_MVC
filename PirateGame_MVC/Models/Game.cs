@@ -95,7 +95,7 @@ namespace PirateGame_MVC.Models
 					await _gameHub.Clients.Client(player.ConnectionId).AskForTarget(playerField);
 					WaitForResponse();
 					//targetNickname = _gameHub.LoadTarget();
-					if (TargetNickname.Length > 2)
+					if (TargetNickname.Length > 2)//TODO magic number ANT
 					{
 						await _gameHub.Clients.Client(player.ConnectionId).ReceiveNotification(player.ConnectionId, "targetNickname received" + TargetNickname);
 					}
