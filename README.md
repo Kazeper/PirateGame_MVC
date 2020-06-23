@@ -9,23 +9,19 @@ Main features:
  * Asp.net Core
  * javascript
 
-## homepage
-
- <p></p>
- <img src="homepage.jpg" alt="homepage">  
-<br/>
-
 ## Chat
 
 <p> There are both all-players and group real-time chats. </p>
 <img src="chat.gif" alt="chat example">
 
 ## Lobby
+<br/>
 <p> The place where all players can chat together, create and select the room </p>
 
 ###  &bull; creating room
 
-<p></p>
+<p> Created room instantly appears in lobby</p>
+<br/>
 <img src="createRoom.gif" alt="create room example">
 
 ### &bull; setting gamefields
