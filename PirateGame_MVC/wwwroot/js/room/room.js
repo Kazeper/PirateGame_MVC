@@ -22,6 +22,7 @@ function changeButton() {
 }
 
 leaveButton.addEventListener("click", function (event) {
+	window.removeEventListener("unload", leaveRoom);
 	leaveRoom();
 	event.preventDefault();
 });
@@ -92,12 +93,11 @@ function updatePlayerState(nickname, playerIsReady) {
 
 //tests
 window.addEventListener("beforeunload", showApprovalWindow);
+window.addEventListener("unload", leaveRoom);
 
 function showApprovalWindow(event) {
 	event.returnValue = "Are you sure you want to leave this page?";
 };
-
-window.addEventListener("unload", leaveRoom);
 
 function leaveRoom() {
 	connection.invoke("LeaveRoom", playerNickname, roomId).catch(function (err) {
